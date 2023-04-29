@@ -7,7 +7,7 @@ export default async function handler(req, res) {
   //person/[id]/vehicles/[veh_id]
 
   //Get a single, particular vehicle belonging to one person
-
+  //Commit to Git
   if (req.method === 'GET') {
     try {
       const data = await pool.query(
