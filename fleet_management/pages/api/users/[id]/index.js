@@ -3,6 +3,7 @@ import pool from '../../db/index';
 export default async function handler(req, res) {
   let id = parseInt(req.query.id);
   const { name, email } = req.query;
+
   if (req.method === 'GET') {
     try {
       const data = await pool.query('SELECT * FROM users WHERE id = $1', [id]);

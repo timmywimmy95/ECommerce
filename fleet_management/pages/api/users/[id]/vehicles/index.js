@@ -13,7 +13,7 @@ export default async function handler(req, res) {
         'SELECT * FROM vehicles WHERE user_id = $1',
         [id]
       );
-      res.status(200).json(data);
+      res.status(200).json(data.rows);
     } catch (err) {
       res.status(500).json({ error: "failed to load person's vehicles" });
     }
