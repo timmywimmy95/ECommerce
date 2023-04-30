@@ -2,8 +2,19 @@ import NextAuth from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import { TypeORMLegacyAdapter } from '@next-auth/typeorm-legacy-adapter';
+
 import pool from '../db/index';
 import { compare } from 'bcryptjs';
+
+const connection = {
+  type: 'postgres',
+  host: 'localhost',
+  port: 5432,
+  username: 'postgres',
+  password: '',
+  database: 'learn',
+};
 
 export const authOptions = {
   // Configure one or more authentication providers
@@ -16,33 +27,32 @@ export const authOptions = {
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
-    CredentialsProvider({
-      async authorize(credentials, req) {
-        connectMongo().catch((error) => {
-          error: 'Connection failed';
-        });
-        const result = await Users.findOne({
-          email: credentials.email,
-        });
-        if (!result) {
-          throw new Error('No user found with email. Please sign up!');
-        }
+    // CredentialsProvider({
+    //   async authorize(credentials, req) {
 
-        //bcrypt compare
-        const checkPassword = await compare(
-          credentials.password,
-          result.password
-        );
-        if (!checkPassword || result.email !== credentials.email) {
-          throw new Error('Username or Password does not match');
-        }
-        console.log(result);
-        return result;
-      },
-    }),
+    //     const result = await Users.findOne({
+    //       email: credentials.email,
+    //     });
+    //     if (!result) {
+    //       throw new Error('No user found with email. Please sign up!');
+    //     }
+
+    //     //bcrypt compare
+    //     const checkPassword = await compare(
+    //       credentials.password,
+    //       result.password
+    //     );
+    //     if (!checkPassword || result.email !== credentials.email) {
+    //       throw new Error('Username or Password does not match');
+    //     }
+    //     console.log(result);
+    //     return result;
+    //   },
+    // }),
 
     // ...add more providers here
   ],
+  adapter: TypeORMLegacyAdapter(connection),
   session: {
     strategy: 'jwt',
   },
