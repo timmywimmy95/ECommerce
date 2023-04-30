@@ -27,28 +27,34 @@ export const authOptions = {
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
-    // CredentialsProvider({
-    //   async authorize(credentials, req) {
+    CredentialsProvider({
+      name: 'Credentials',
 
-    //     const result = await Users.findOne({
-    //       email: credentials.email,
-    //     });
-    //     if (!result) {
-    //       throw new Error('No user found with email. Please sign up!');
-    //     }
-
-    //     //bcrypt compare
-    //     const checkPassword = await compare(
-    //       credentials.password,
-    //       result.password
-    //     );
-    //     if (!checkPassword || result.email !== credentials.email) {
-    //       throw new Error('Username or Password does not match');
-    //     }
-    //     console.log(result);
-    //     return result;
-    //   },
-    // }),
+      async authorize(credentials, req) {
+        pool.catch((error) => {
+          error: 'Connection failed';
+        });
+        //Check for user existence
+        const result = await pool.query(
+          'SELECT * FROM users WHERE email = $1',
+          [credentials.email]
+        );
+        // If user does not exist, throw error
+        if (!result) {
+          throw new Error(`No user found with email ${credentials.email}`);
+        }
+        // when user is found, compare the typed in password (credentials.password) with database password
+        const checkPassword = await compare(
+          credentials.password,
+          result.password
+        );
+        // check for incorrect password
+        if (!checkPassword || result.email !== credentials.email) {
+          throw new Error('Username or password does not match');
+        }
+        return result;
+      },
+    }),
 
     // ...add more providers here
   ],

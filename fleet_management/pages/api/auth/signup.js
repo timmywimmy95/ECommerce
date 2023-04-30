@@ -1,30 +1,46 @@
-import connectMongo from '@/database/conn';
-import Users from '@/model/Schema';
 import { hash } from 'bcryptjs';
+import pool from '../db/index';
 
 export default async function handler(req, res) {
-  connectMongo().catch((error) => res.json({ error: 'Connection Failed' }));
-
   if (req.method === 'POST') {
     if (!req.body)
-      return res.status(404).json({ error: 'Form data not found' });
+      return res.status(404).json({ error: 'Do not have form data' });
 
     const { username, email, password } = req.body;
+    // Check for duplicate users
+    const checkexisting = await pool.query(
+      'SELECT EXISTS (SELECT 1 FROM users WHERE email = $1)',
+      [email]
+    );
 
-    //Check duplicate users
-    const checkUsers = await Users.findOne({ email });
-    if (checkUsers)
-      return res.status(422).json({ message: 'User already exists!' });
+    if (checkexisting.rows[0].exists)
+      return res.status(422).json({ message: 'User already exists' });
 
-    const createdUser = await Users.create({
-      username,
-      email,
-      password: await hash(password, 12),
-    });
-    if (!createdUser) {
-      return res.status(404).json({ err });
-    } else {
-      res.status(201).json({ status: true, user: createdUser });
+    async function hashPassword(password) {
+      const saltRounds = 12;
+
+      const hashedPassword = await new Promise((resolve, reject) => {
+        hash(password, saltRounds, function (err, hash) {
+          if (err) reject(err);
+          resolve(hash);
+        });
+      });
+
+      return hashedPassword;
+    }
+
+    try {
+      let hashedPassword = await hashPassword(password);
+      const data = await pool.query(
+        'INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING *',
+        [username, email, hashedPassword]
+      );
+      res.status(201).json({
+        message: `Successfully added ${username} and ${email}`,
+        user: data.rows,
+      });
+    } catch (err) {
+      res.status(500).json({ error: 'failed to add user' });
     }
   } else {
     res
