@@ -31,28 +31,27 @@ export const authOptions = {
       name: 'Credentials',
 
       async authorize(credentials, req) {
-        pool.catch((error) => {
-          error: 'Connection failed';
-        });
         //Check for user existence
         const result = await pool.query(
           'SELECT * FROM users WHERE email = $1',
+          // 'SELECT EXISTS (SELECT 1 FROM users WHERE email = $1)',
           [credentials.email]
         );
         // If user does not exist, throw error
-        if (!result) {
+        if (result.rowCount === 0) {
           throw new Error(`No user found with email ${credentials.email}`);
         }
         // when user is found, compare the typed in password (credentials.password) with database password
         const checkPassword = await compare(
           credentials.password,
-          result.password
+          result.rows[0].password
         );
         // check for incorrect password
-        if (!checkPassword || result.email !== credentials.email) {
+        if (!checkPassword || result.rows[0].email !== credentials.email) {
           throw new Error('Username or password does not match');
         }
-        return result;
+        console.log(result.rowCount);
+        return result.rows[0];
       },
     }),
 

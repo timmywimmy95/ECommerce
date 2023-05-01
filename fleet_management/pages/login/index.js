@@ -12,6 +12,7 @@ import { useRouter } from 'next/router';
 
 const login = () => {
   const [show, setShow] = useState(false);
+  const [error, setError] = useState('');
   const router = useRouter();
 
   const formik = useFormik({
@@ -35,6 +36,8 @@ const login = () => {
     });
     if (status.ok) {
       router.push(status.url);
+    } else if (status.error !== null) {
+      setError(status.error);
     }
   }
 
@@ -91,14 +94,37 @@ const login = () => {
           ) : (
             <></>
           )}
+          {error !== '' ? (
+            <span className='text-rose-500'>{error}</span>
+          ) : (
+            <></>
+          )}
           <div className='input-button'>
             <button type='submit' className={styles.button}>
               Login
             </button>
           </div>
-          <div className='input-button'>
-            {/* <img src='./assets/github.svg' alt='google' /> */}
-            <button
+        </form>
+
+        <p className='text-center text-gray-400'>Don't have an account yet? </p>
+        <Link href={'/register'} className='text-blue-700'>
+          Sign Up
+        </Link>
+      </section>
+    </Layout>
+  );
+};
+
+export default login;
+
+{
+  /* <div className='input-button'> */
+}
+{
+  /* <img src='./assets/github.svg' alt='google' /> */
+}
+{
+  /* <button
               onClick={() =>
                 signIn('google', { callbackUrl: 'http://localhost:3000' })
               }
@@ -119,16 +145,5 @@ const login = () => {
             >
               Sign In with GitHub
             </button>
-          </div>
-        </form>
-
-        <p className='text-center text-gray-400'>Don't have an account yet? </p>
-        <Link href={'/register'} className='text-blue-700'>
-          Sign Up
-        </Link>
-      </section>
-    </Layout>
-  );
-};
-
-export default login;
+          </div> */
+}
