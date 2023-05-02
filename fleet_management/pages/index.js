@@ -6,6 +6,10 @@ import { Inter } from 'next/font/google';
 import styles from '../styles/Home.module.css';
 import { getSession, useSession, signOut } from 'next-auth/react';
 import { useRouter } from 'next/router';
+import Header from '@/components/Header';
+import TopCards from '@/components/TopCards';
+import BarChart from '@/components/BarChart';
+import RecentOrders from '@/components/RecentOrders';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -17,7 +21,19 @@ export default function Home() {
       <Head>
         <title>Home Page</title>
       </Head>
-      {session ? User({ session }) : Guest()}
+      <main className='bg-gray-100 min-h-screen overflow-hidden'>
+        <Header />
+        {/* {session ? User({ session }) : Guest()} */}
+        {
+          //TO DO. ADD USER AND GUEST COMPONENT
+        }
+        <TopCards />
+        <div className='p-4 grid md:grid-cols-3 grid-cols-1 gap-4'>
+          <BarChart />
+          <RecentOrders />
+        </div>
+      </main>
+
       {/* {Guest()} */}
     </>
   );

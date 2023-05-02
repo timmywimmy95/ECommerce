@@ -1,3 +1,4 @@
+
 .input_group{
     @apply flex border rounded-xl;
     position: relative;
@@ -35,3 +36,6 @@
     color: #6366f1;
     cursor: pointer;
 }
+
+
+
