@@ -5,6 +5,7 @@ import { FaMotorcycle } from 'react-icons/fa';
 import { RiAddFill } from 'react-icons/ri';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import VehSvcCard from '@/components/VehCard';
 
 const handleEvent = (
   e,
@@ -17,7 +18,7 @@ const handleEvent = (
   router.push('/');
 };
 
-const vehicles = () => {
+const vehicles = ({ vehicles }) => {
   const rows = [
     { id: 1, col1: 'Hello', col2: 'World' },
     { id: 2, col1: 'DataGridPro', col2: 'is Awesome' },
@@ -55,14 +56,25 @@ const vehicles = () => {
       </div>
 
       <div className='p-4'>
-        <div className='w-full m-auto p-4 border rounded-lg bg-white overflow-y-auto'>
+        <div className='flex justify-between w-full m-auto p-4 border rounded-lg bg-white overflow-y-auto'>
           {/* <div className='my-3 p-2 grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 items-center justify-between cursor-pointer'>
             <span>License Plate</span>
             <span>Mileage (km)</span>
             <span>Last Serviced</span>
             <span>Mileage Left</span>
           </div> */}
-          <DataGrid onRowClick={handleEvent} rows={rows} columns={columns} />
+          {/* <DataGrid onRowClick={handleEvent} rows={rows} columns={columns} /> */}
+          {/* <VehSvcCard />
+          <VehSvcCard />
+          <VehSvcCard /> */}
+
+          {vehicles.map((vehicle) => {
+            return (
+              <div key={vehicle.id}>
+                <VehSvcCard data={vehicle} />
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
@@ -70,3 +82,14 @@ const vehicles = () => {
 };
 
 export default vehicles;
+
+export async function getServerSideProps() {
+  const vehRes = await fetch('http://localhost:3000/api/vehicles');
+  const vehData = await vehRes.json();
+
+  return {
+    props: {
+      vehicles: vehData,
+    },
+  };
+}
