@@ -1,11 +1,12 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { FaTachometerAlt } from 'react-icons/fa';
+import { FaTachometerAlt, FaSignOutAlt } from 'react-icons/fa';
 import { RxPerson } from 'react-icons/rx';
 import { GiCartwheel, GiSpanner } from 'react-icons/gi';
 import { HiOutlineShoppingBag } from 'react-icons/hi';
 import { FiSettings } from 'react-icons/fi';
+import { getSession, useSession, signOut } from 'next-auth/react';
 
 const Sidebar = ({ children }) => {
   return (
@@ -34,11 +35,11 @@ const Sidebar = ({ children }) => {
                 <GiSpanner size={20} />
               </div>
             </Link>
-            <Link href='/settings'>
+            <button onClick={() => signOut()}>
               <div className=' bg-gray-100 hover:bg-gray-500 cursor-pointer p-3 mt-4 rounded-lg inline-block'>
-                <FiSettings size={20} />
+                <FaSignOutAlt size={20} />
               </div>
-            </Link>
+            </button>
           </div>
         </div>
       </div>
