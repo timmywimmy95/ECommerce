@@ -4,6 +4,7 @@ import { AiFillCar } from 'react-icons/ai';
 import { FaMotorcycle } from 'react-icons/fa';
 import { RiAddFill } from 'react-icons/ri';
 import SvcCard from '@/components/SvcCard';
+import Link from 'next/link';
 
 const servicing = ({ servicing }) => {
   const rows = [
@@ -53,14 +54,28 @@ const servicing = ({ servicing }) => {
     //   </div>
     // </div>
     <>
-      <div className='flex justify-between p-4'>
-        {servicing.map((service) => {
-          return (
-            <div key={service.id}>
-              <SvcCard data={service} />
-            </div>
-          );
-        })}
+      <div className='bg-gray-100 min-h-screen'>
+        <div className='flex justify-between p-4'>
+          <h2 className='font-bold text-lg'>Servicing Records</h2>
+          <Link href='/servicing/add_servicing'>
+            <button className='flex items-center bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded'>
+              <RiAddFill />
+              <h2>Add Servicing</h2>
+            </button>
+          </Link>
+        </div>
+
+        <div className='flex justify-between p-4'>
+          <div className='flex justify-between w-full m-auto p-4 border rounded-lg bg-white overflow-y-auto'>
+            {servicing.map((service) => {
+              return (
+                <div key={service.id}>
+                  <SvcCard className='w-6' data={service} />
+                </div>
+              );
+            })}
+          </div>
+        </div>
       </div>
     </>
   );

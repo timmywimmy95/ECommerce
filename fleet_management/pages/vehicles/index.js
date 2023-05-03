@@ -46,7 +46,7 @@ const vehicles = ({ vehicles }) => {
   return (
     <div className='bg-gray-100 min-h-screen'>
       <div className='flex justify-between p-4'>
-        <h2 className='font-bold text-lg'>Vehicles</h2>
+        <h2 className='font-bold text-lg'>Vehicle Records</h2>
         <Link href='/vehicles/add_vehicle'>
           <button className='flex items-center bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded'>
             <RiAddFill />
@@ -57,17 +57,6 @@ const vehicles = ({ vehicles }) => {
 
       <div className='p-4'>
         <div className='flex justify-between w-full m-auto p-4 border rounded-lg bg-white overflow-y-auto'>
-          {/* <div className='my-3 p-2 grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 items-center justify-between cursor-pointer'>
-            <span>License Plate</span>
-            <span>Mileage (km)</span>
-            <span>Last Serviced</span>
-            <span>Mileage Left</span>
-          </div> */}
-          {/* <DataGrid onRowClick={handleEvent} rows={rows} columns={columns} /> */}
-          {/* <VehSvcCard />
-          <VehSvcCard />
-          <VehSvcCard /> */}
-
           {vehicles.map((vehicle) => {
             return (
               <div key={vehicle.id}>
