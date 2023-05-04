@@ -14,4 +14,26 @@ export default async function handler(req, res) {
       res.status(500).json({ error: 'failed to load data' });
     }
   }
+  if (req.method === 'POST') {
+    let { servicedate, description, cost, license_plate, mileage } = req.body;
+    try {
+      const vehQuery = await pool.query(
+        'SELECT id FROM vehicles WHERE license_plate = $1',
+        [license_plate]
+      );
+
+      const vehicleId = vehQuery.rows[0].id;
+
+      const data = await pool.query(
+        'INSERT INTO servicing (servicedate, description, cost, mileage, license_plate, veh_id) VALUES ($1, $2, $3, $4, $5, $6)',
+        [servicedate, description, cost, mileage, license_plate, vehicleId]
+      );
+      res.status(200).redirect('http://localhost:3000/servicing/');
+    } catch (err) {
+      console.log(servicedate, mileage, cost, description, license_plate);
+      res.status(500).json({ error: err });
+    }
+  }
 }
+
+// 'INSERT INTO servicing (servicedate, description, cost, mileage, license_plate, veh_id) VALUES ($1, $2, $3, $4, $5, (SELECT id from vehicles where license_plate = $5))',

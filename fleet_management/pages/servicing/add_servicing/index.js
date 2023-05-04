@@ -1,39 +1,83 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 const addServicing = () => {
+  const [license_plate, setLicensePlate] = useState('');
+  const [servicedate, setServiceDate] = useState('');
+  const [description, setDescription] = useState('');
+  const [mileage, setMileage] = useState('');
+  const [cost, setCost] = useState('');
+  const [records, setRecords] = useState([]);
+
+  let plates = [];
+  async function licensePlates() {
+    const options = {
+      method: 'GET',
+      headers: { 'content-type': 'application/json' },
+    };
+    await fetch(`http://localhost:3000/api/vehicles/`, options)
+      .then((res) => res.json())
+      .then((data) => {
+        data.map((plate) => {
+          return plates.push(plate.license_plate);
+        });
+        setRecords(plates);
+      });
+  }
+  useEffect(() => {
+    licensePlates();
+  }, []);
+
   return (
-    <form>
+    <form action={`http://localhost:3000/api/servicing`} method='POST'>
       <div className='py-3 px-8 '>
         <div className='border-b border-gray-900/10 pb-12'>
           <h2 className='text-base font-semibold leading-7 text-gray-900'>
             Add New Service
           </h2>
-          <p className='mt-1 text-sm leading-6 text-gray-600'>asdasd </p>
+          <p className='mt-1 text-sm leading-6 text-gray-600'>
+            Please register your vehicle prior to adding a new servicing.
+          </p>
 
           <div className='mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6'>
             <div className='sm:col-span-4'>
               <label
-                htmlFor='username'
+                htmlFor='license_plate'
                 className='block text-sm font-medium leading-6 text-gray-900'
               >
                 Vehicle Number
               </label>
               <div className='mt-2'>
-                <div className='flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 sm:max-w-md'>
-                  <input
+                {/* <input
                     type='text'
-                    name='username'
-                    id='username'
-                    autoComplete='username'
+                    name='license_plate'
+                    id='license_plate'
+                    autoComplete='license_plate'
                     className='p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6'
-                    placeholder='Do not leave spacing'
-                  />
-                </div>
+                    placeholder='Do not leave any spaces'
+                    value={license_plate}
+                    onChange={(e) => {
+                      setLicensePlate(e.target.value);
+                    }}
+                  /> */}
+                <select
+                  id='role'
+                  name='role'
+                  autoComplete='country-name'
+                  className='p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6'
+                  onChange={(e) => {
+                    setLicensePlate(e.target.value);
+                  }}
+                >
+                  {records.map((record) => {
+                    return <option key={record}>{record}</option>;
+                  })}
+                  {/* <option>{plates[0]}</option> */}
+                </select>
               </div>
             </div>
             <div className='sm:col-span-4'>
               <label
-                htmlFor='username'
+                htmlFor='servicedate'
                 className='block text-sm font-medium leading-6 text-gray-900'
               >
                 Service Date
@@ -46,6 +90,10 @@ const addServicing = () => {
                     id='servicedate'
                     autoComplete='servicedate'
                     className='p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6'
+                    value={servicedate}
+                    onChange={(e) => {
+                      setServiceDate(e.target.value);
+                    }}
                   />
                 </div>
               </div>
@@ -57,108 +105,85 @@ const addServicing = () => {
           <h2 className='text-base font-semibold leading-7 text-gray-900'>
             Servicing Information
           </h2>
-          <p className='mt-1 text-sm leading-6 text-gray-600'>asdasd </p>
+          {/* <p className='mt-1 text-sm leading-6 text-gray-600'>asdasd </p> */}
 
           <div className='mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6'>
             <div className='sm:col-span-4'>
               <label
-                htmlFor='first-name'
+                htmlFor='description'
                 className='block text-sm font-medium leading-6 text-gray-900'
               >
                 Description
               </label>
               <p className='mt-1 text-sm leading-6 text-gray-400'>
-                Please limit it to 100 characters.{' '}
+                Please limit it to 100 characters.
               </p>
               <div className='mt-2'>
                 <textarea
                   type='text'
-                  name='first-name'
-                  id='first-name'
-                  autoComplete='given-name'
+                  name='description'
+                  id='description'
+                  autoComplete='description'
                   className='p-4 block w-3/4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6'
+                  value={description}
+                  onChange={(e) => {
+                    setDescription(e.target.value);
+                  }}
                 />
               </div>
             </div>
 
             <div className='sm:col-span-4'>
               <label
-                htmlFor='email'
+                htmlFor='mileage'
                 className='block text-sm font-medium leading-6 text-gray-900'
               >
                 Mileage
               </label>
-              <div className='mt-2'>
+              <div className='flex mt-2'>
                 <input
                   id='mileage'
                   name='mileage'
                   type='mileage'
-                  autoComplete='email'
-                  className='p-4 block w-3/6 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400    sm:text-sm sm:leading-6'
+                  autoComplete='mileage'
+                  className='p-4 block w-3/6 rounded-none rounded-l-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6'
+                  value={mileage}
+                  onChange={(e) => {
+                    setMileage(e.target.value);
+                  }}
                 />
+                <span className='inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-l-0 border-gray-300 rounded-r-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600'>
+                  Km
+                </span>
               </div>
             </div>
 
             <div className='sm:col-span-4'>
               <label
-                htmlFor='last-name'
+                htmlFor='cost'
                 className='block text-sm font-medium leading-6 text-gray-900'
               >
                 Cost
               </label>
-              <div className='mt-2'>
+              <div className='flex mt-2'>
+                <span className='inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600'>
+                  $
+                </span>
                 <input
                   type='text'
-                  name='last-name'
-                  id='last-name'
-                  autoComplete='family-name'
-                  className='p-4 w-3/6 block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6'
+                  name='cost'
+                  id='cost'
+                  autoComplete='cost'
+                  className='p-4 w-3/6 block rounded-none rounded-r-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6'
+                  value={cost}
+                  onChange={(e) => {
+                    setCost(e.target.value);
+                  }}
                 />
               </div>
             </div>
           </div>
         </div>
-
-        {/* <div className='border-b border-gray-900/10 pb-12'>
-          <h2 className='text-base font-semibold leading-7 text-gray-900'>
-            Notifications
-          </h2>
-          <p className='mt-1 text-sm leading-6 text-gray-600'>
-            We'll always let you know about important changes, but you pick what
-            else you want to hear about.
-          </p>
-
-          <div className='mt-10 space-y-10'>
-            <fieldset>
-              <legend className='text-sm font-semibold leading-6 text-gray-900'>
-                By Email
-              </legend>
-              <div className='mt-6 space-y-6'>
-                <div className='relative flex gap-x-3'>
-                  <div className='flex h-6 items-center'>
-                    <input
-                      id='comments'
-                      name='comments'
-                      type='checkbox'
-                      className='h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600'
-                    />
-                  </div>
-                  <div className='text-sm leading-6'>
-                    <label
-                      htmlFor='comments'
-                      className='font-medium text-gray-900'
-                    >
-                      Comments
-                    </label>
-                    <p className='text-gray-500'>
-                      Get notified when someones posts a comment on a posting.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </fieldset>
-          </div>
-        </div> */}
       </div>
 
       <div className='my-6 flex items-center justify-center gap-x-6'>
