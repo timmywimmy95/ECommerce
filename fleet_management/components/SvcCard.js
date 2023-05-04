@@ -8,12 +8,33 @@ import {
 
 import Link from 'next/link';
 import Dropdown from './Dropdown';
+import { useRouter } from 'next/router';
 
 const SvcCard = ({ data }) => {
+  let router = useRouter();
   let date = new Date(data.servicedate);
   let month = date.toLocaleString('default', { month: 'short' });
   let day = date.getDate();
   let year = date.getFullYear();
+
+  const handleDelete = async (e) => {
+    e.preventDefault();
+
+    const options = {
+      method: 'DELETE',
+      headers: { 'content-type': 'application/json' },
+    };
+    await fetch(
+      `http://localhost:3000/api/vehicles/${data.veh_id}/servicing/${data.id}`,
+      options
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data.error) {
+          router.push('/servicing');
+        }
+      });
+  };
 
   return (
     <div className='flex flex-col p-8 rounded-xl bg-white shadow-xl md:h-72 md:w-64 sm:w-auto sm: h-auto'>
@@ -23,7 +44,7 @@ const SvcCard = ({ data }) => {
         ) : (
           <GiFullMotorcycleHelmet size={25} />
         )}
-        <Dropdown info={data} />
+        <Dropdown info={data} handleDelete={(e) => handleDelete(e)} />
       </div>
       <div className='bg-grey-100 font-bold text-lg'>{data.license_plate}</div>
       <div className='mt-3 font-semibold text-sm'>{data.description}</div>

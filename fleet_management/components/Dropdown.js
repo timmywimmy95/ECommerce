@@ -5,8 +5,7 @@ import { AiOutlineDelete } from 'react-icons/ai';
 import { GrFormEdit } from 'react-icons/gr';
 import Link from 'next/link';
 
-const Dropdown = ({ info }) => {
-  console.log(info);
+const Dropdown = ({ info, handleDelete }) => {
   return (
     <Popover className='relative'>
       <Popover.Button>
@@ -22,7 +21,7 @@ const Dropdown = ({ info }) => {
       >
         <Popover.Panel className='absolute justify-end'>
           <div className='flex flex-row-reverse items-center'>
-            <button>
+            <button onClick={handleDelete}>
               <span>
                 <AiOutlineDelete className='text-indigo-600 ' size={20} />
               </span>
