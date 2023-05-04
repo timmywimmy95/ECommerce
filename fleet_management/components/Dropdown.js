@@ -4,8 +4,13 @@ import { Popover, Transition } from '@headlessui/react';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { GrFormEdit } from 'react-icons/gr';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const Dropdown = ({ info, handleDelete }) => {
+  const router = useRouter();
+  const handleEdit = () => {
+    router.push(`http://localhost:3000/servicing/${info.id}/update_servicing`);
+  };
   return (
     <Popover className='relative'>
       <Popover.Button>
@@ -26,7 +31,7 @@ const Dropdown = ({ info, handleDelete }) => {
                 <AiOutlineDelete className='text-indigo-600 ' size={20} />
               </span>
             </button>
-            <button>
+            <button onClick={handleEdit}>
               <span>
                 <GrFormEdit className='text-indigo-600' size={22} />
               </span>
