@@ -1,14 +1,43 @@
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
-const updateServicing = () => {
-  const [license_plate, setLicensePlate] = useState('');
-  const [servicedate, setServiceDate] = useState('');
-  const [description, setDescription] = useState('');
-  const [mileage, setMileage] = useState('');
-  const [cost, setCost] = useState('');
+const updateServicing = ({ servicing }) => {
+  let date = new Date(servicing.servicedate);
+  let month = ('0' + (date.getMonth() + 1)).slice(-2);
+  let day = ('0' + date.getDate()).slice(-2);
+  let year = date.getFullYear();
+
+  const [license_plate, setLicensePlate] = useState(servicing.license_plate);
+  const [servicedate, setServiceDate] = useState(`${year}-03-${day}`);
+  const [description, setDescription] = useState(servicing.description);
+  const [mileage, setMileage] = useState(servicing.mileage);
+  const [cost, setCost] = useState(servicing.cost);
   const [records, setRecords] = useState([]);
 
+  const router = useRouter();
   let plates = [];
+
+  async function updateServicing(e) {
+    e.preventDefault();
+    const options = {
+      method: 'PUT',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        license_plate: license_plate,
+        servicedate: servicedate,
+        description: description,
+        mileage: mileage,
+        cost: cost,
+      }),
+    };
+    await fetch(`http://localhost:3000/api/servicing/${servicing.id}`, options)
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data.error) {
+          router.push('/servicing');
+        }
+      });
+  }
   async function licensePlates() {
     const options = {
       method: 'GET',
@@ -28,7 +57,7 @@ const updateServicing = () => {
   }, []);
 
   return (
-    <form action={`http://localhost:3000/api/servicing`} method='POST'>
+    <form onSubmit={updateServicing}>
       <div className='py-3 px-8 '>
         <div className='border-b border-gray-900/10 pb-12'>
           <h2 className='text-base font-semibold leading-7 text-gray-900'>
@@ -205,3 +234,16 @@ const updateServicing = () => {
 };
 
 export default updateServicing;
+
+export async function getServerSideProps({ req }) {
+  let servicingId = req.url.slice(11, 12);
+
+  const res = await fetch(`http://localhost:3000/api/servicing/${servicingId}`);
+  const data = await res.json();
+
+  return {
+    props: {
+      servicing: data,
+    },
+  };
+}

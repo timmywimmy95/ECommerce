@@ -35,5 +35,3 @@ export default async function handler(req, res) {
     }
   }
 }
-
-// 'INSERT INTO servicing (servicedate, description, cost, mileage, license_plate, veh_id) VALUES ($1, $2, $3, $4, $5, (SELECT id from vehicles where license_plate = $5))',
