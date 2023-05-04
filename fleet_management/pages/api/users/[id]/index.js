@@ -2,7 +2,7 @@ import pool from '../../db/index';
 
 export default async function handler(req, res) {
   let id = parseInt(req.query.id);
-  const { name, email } = req.query;
+  const { username, email, first_name, last_name, role } = req.body;
 
   if (req.method === 'GET') {
     try {
@@ -15,13 +15,14 @@ export default async function handler(req, res) {
   if (req.method === 'POST') {
     try {
       const data = await pool.query(
-        'INSERT INTO users (name, email) VALUES ($1, $2) RETURNING *',
-        [name, email]
+        'INSERT INTO users (first_name, last_name, email, username, role) VALUES ($1, $2, $3, $4, $5) WHERE id=$6',
+        [first_name, last_name, email, username, role, id]
       );
       res
         .status(200)
         .json({ message: `Successfully added ${name} and ${email}` });
     } catch (err) {
+      console.log(first_name, last_name, email, username, role, id);
       res.status(500).json({ error: 'failed to insert data' });
     }
   }
@@ -36,15 +37,18 @@ export default async function handler(req, res) {
   }
 
   if (req.method === 'PUT') {
+    const { username, email, first_name, last_name, role } = req.body;
     try {
       const data = await pool.query(
-        'UPDATE users SET name = $1, email = $2 WHERE id = $3',
-        [name, email, id]
+        'UPDATE users SET first_name = $1, last_name = $2, username = $3, email = $4, role = $5 WHERE id = $6',
+        [first_name, last_name, username, email, role, id]
       );
+
       res
         .status(200)
-        .json({ message: `Successfully updated ${name} and ${email}` });
+        .json({ message: `Successfully updated ${first_name} and ${email}` });
     } catch (err) {
+      console.log(first_name, last_name, username, email, role, id);
       res.status(500).json({ error: 'failed to update data' });
     }
   }
