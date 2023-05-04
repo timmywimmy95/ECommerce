@@ -6,7 +6,7 @@ const addServicing = () => {
       <div className='py-3 px-8 '>
         <div className='border-b border-gray-900/10 pb-12'>
           <h2 className='text-base font-semibold leading-7 text-gray-900'>
-            Profile Page
+            Add New Service
           </h2>
           <p className='mt-1 text-sm leading-6 text-gray-600'>asdasd </p>
 
@@ -16,7 +16,7 @@ const addServicing = () => {
                 htmlFor='username'
                 className='block text-sm font-medium leading-6 text-gray-900'
               >
-                Username
+                Vehicle Number
               </label>
               <div className='mt-2'>
                 <div className='flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 sm:max-w-md'>
@@ -27,6 +27,25 @@ const addServicing = () => {
                     autoComplete='username'
                     className='p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6'
                     placeholder='janesmith'
+                  />
+                </div>
+              </div>
+            </div>
+            <div className='sm:col-span-4'>
+              <label
+                htmlFor='username'
+                className='block text-sm font-medium leading-6 text-gray-900'
+              >
+                Service Date
+              </label>
+              <div className='mt-2'>
+                <div className='flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 sm:max-w-md'>
+                  <input
+                    type='date'
+                    name='servicedate'
+                    id='servicedate'
+                    autoComplete='servicedate'
+                    className='p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6'
                   />
                 </div>
               </div>
