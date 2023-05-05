@@ -1,6 +1,8 @@
+import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
 const addVehicle = () => {
+  const router = useRouter();
   const [type, setType] = useState('');
   const [make, setMake] = useState('');
   const [model, setModel] = useState('');
@@ -206,6 +208,9 @@ const addVehicle = () => {
 
       <div className='my-6 flex items-center justify-center gap-x-6'>
         <button
+          onClick={() => {
+            router.push('http://localhost:3000/vehicles/');
+          }}
           type='button'
           className='text-sm font-semibold leading-6 text-gray-900'
         >
