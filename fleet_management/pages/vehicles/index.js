@@ -56,7 +56,7 @@ const vehicles = ({ vehicles }) => {
       </div>
 
       <div className='p-4'>
-        <div className='flex justify-between w-full m-auto p-4 border rounded-lg bg-white overflow-y-auto'>
+        <div className='flex flex-wrap justify-between w-full m-auto p-4 border rounded-lg bg-white overflow-y-auto'>
           {vehicles.map((vehicle) => {
             return (
               <div key={vehicle.id}>

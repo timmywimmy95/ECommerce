@@ -36,6 +36,10 @@ const SvcCard = ({ data }) => {
       });
   };
 
+  const handleEdit = () => {
+    router.push(`http://localhost:3000/servicing/${data.id}/update_servicing`);
+  };
+
   return (
     <div className='flex flex-col p-8 m-4 rounded-xl bg-white shadow-xl md:h-72 md:w-64 sm:w-auto sm: h-auto'>
       <div className='flex justify-between py-4'>
@@ -44,7 +48,11 @@ const SvcCard = ({ data }) => {
         ) : (
           <GiFullMotorcycleHelmet size={25} />
         )}
-        <Dropdown info={data} handleDelete={(e) => handleDelete(e)} />
+        <Dropdown
+          info={data}
+          handleDelete={(e) => handleDelete(e)}
+          handleEdit={(e) => handleEdit(e)}
+        />
       </div>
       <div className='bg-grey-100 font-bold text-lg'>{data.license_plate}</div>
       <div className='mt-3 font-semibold text-sm'>{data.description}</div>

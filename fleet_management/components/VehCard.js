@@ -50,10 +50,16 @@ import { useRouter } from 'next/router';
 const VehCard = ({ data }) => {
   console.log(data);
   let router = useRouter();
-  let date = new Date(data.servicedate);
-  let month = date.toLocaleString('default', { month: 'short' });
-  let day = date.getDate();
-  let year = date.getFullYear();
+  let coe_date = new Date(data.coe);
+  let coe_month = coe_date.toLocaleString('default', { month: 'short' });
+  let coe_day = coe_date.getDate();
+  let coe_year = coe_date.getFullYear();
+  let road_tax_date = new Date(data.road_tax);
+  let road_tax_month = road_tax_date.toLocaleString('default', {
+    month: 'short',
+  });
+  let road_tax_day = road_tax_date.getDate();
+  let road_tax_year = road_tax_date.getFullYear();
 
   const handleDelete = async (e) => {
     e.preventDefault();
@@ -70,6 +76,9 @@ const VehCard = ({ data }) => {
         }
       });
   };
+  const handleEdit = () => {
+    router.push(`http://localhost:3000/vehicles/${data.id}/update_vehicle`);
+  };
 
   return (
     <div className='flex flex-col p-8 m-4 rounded-xl bg-white shadow-xl md:h-72 md:w-64 sm:w-auto sm: h-auto'>
@@ -79,17 +88,32 @@ const VehCard = ({ data }) => {
         ) : (
           <GiFullMotorcycleHelmet size={25} />
         )}
-        <Dropdown info={data} handleDelete={(e) => handleDelete(e)} />
+        <Dropdown
+          info={data}
+          handleDelete={(e) => handleDelete(e)}
+          handleEdit={(e) => handleEdit(e)}
+        />
       </div>
       <div className='bg-grey-100 font-bold text-lg'>{data.license_plate}</div>
-      <div className='mt-3 font-semibold text-sm'>{data.description}</div>
-      <div className='text-sm font-light w-60 md:w-auto'></div>
-      <div className='mt-auto text-sm font-light w-60 md:w-auto'>
-        {day} {month} {year}
+      <div className='mt-3 font-semibold text-sm '>{data.make}</div>
+      <div className='text-sm font-light w-60 md:w-auto leading-6'>
+        {data.model}, {data.year}
       </div>
+      <div className='flex flex-col mt-1'>
+        <p className=' text-sm leading-6 text-gray-600'>
+          COE: {coe_day} {coe_month} {coe_year}
+        </p>
+        <p className=' text-sm leading-6 text-gray-600'>
+          Road Tax: {road_tax_day} {road_tax_month} {road_tax_year}
+        </p>
+      </div>
+      {/* <div className='mt-auto text-sm font-light w-60 md:w-auto'>
+        COE: {coe_day} {coe_month} {coe_year}
+        Road Tax: {road_tax_day} {road_tax_month} {road_tax_year}
+      </div> */}
       <Link
         className='mt-6 leading-normal text-sm'
-        href={`/servicing/${data.id}`}
+        href={`/vehicles/${data.id}`}
       >
         <div className='flex font-semibold w-full group text-slate-400'>
           Read more

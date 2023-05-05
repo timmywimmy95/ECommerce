@@ -6,11 +6,11 @@ import { GrFormEdit } from 'react-icons/gr';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-const Dropdown = ({ info, handleDelete }) => {
+const Dropdown = ({ info, handleDelete, handleEdit }) => {
   const router = useRouter();
-  const handleEdit = () => {
-    router.push(`http://localhost:3000/servicing/${info.id}/update_servicing`);
-  };
+  // const handleEdit = () => {
+  //   router.push(`http://localhost:3000/servicing/${info.id}/update_servicing`);
+  // };
   return (
     <Popover className='relative'>
       <Popover.Button>
