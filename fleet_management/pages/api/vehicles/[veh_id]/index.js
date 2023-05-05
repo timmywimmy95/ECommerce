@@ -15,4 +15,16 @@ export default async function handler(req, res) {
       res.status(500).json({ error: 'failed to load data' });
     }
   }
+  if (req.method === 'DELETE') {
+    try {
+      const data = await pool.query('DELETE FROM vehicles WHERE id = $1', [
+        veh_id,
+      ]);
+      res.status(200).json({
+        message: `Successfully deleted vehicle ${veh_id}`,
+      });
+    } catch (err) {
+      res.status(500).json({ error: 'failed to delete data' });
+    }
+  }
 }
