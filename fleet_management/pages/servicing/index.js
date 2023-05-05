@@ -66,7 +66,7 @@ const servicing = ({ servicing }) => {
         </div>
 
         <div className='flex justify-between p-4'>
-          <div className='flex justify-between w-full m-auto p-4 border rounded-lg bg-white overflow-y-auto'>
+          <div className='flex flex-wrap justify-between w-full m-auto p-4 border rounded-lg bg-white overflow-y-auto'>
             {servicing.map((service) => {
               return (
                 <div key={service.id}>

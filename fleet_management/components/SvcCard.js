@@ -37,7 +37,7 @@ const SvcCard = ({ data }) => {
   };
 
   return (
-    <div className='flex flex-col p-8 rounded-xl bg-white shadow-xl md:h-72 md:w-64 sm:w-auto sm: h-auto'>
+    <div className='flex flex-col p-8 m-4 rounded-xl bg-white shadow-xl md:h-72 md:w-64 sm:w-auto sm: h-auto'>
       <div className='flex justify-between py-4'>
         {data.type === 'car' ? (
           <BsFillCarFrontFill size={25} />
