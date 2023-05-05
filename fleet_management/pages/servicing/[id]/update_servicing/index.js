@@ -8,7 +8,7 @@ const updateServicing = ({ servicing }) => {
   let year = date.getFullYear();
 
   const [license_plate, setLicensePlate] = useState(servicing.license_plate);
-  const [servicedate, setServiceDate] = useState(`${year}-03-${day}`);
+  const [servicedate, setServiceDate] = useState(`${year}-${month}-${day}`);
   const [description, setDescription] = useState(servicing.description);
   const [mileage, setMileage] = useState(servicing.mileage);
   const [cost, setCost] = useState(servicing.cost);
@@ -76,23 +76,12 @@ const updateServicing = ({ servicing }) => {
                 Vehicle Number
               </label>
               <div className='mt-2'>
-                {/* <input
-                    type='text'
-                    name='license_plate'
-                    id='license_plate'
-                    autoComplete='license_plate'
-                    className='p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6'
-                    placeholder='Do not leave any spaces'
-                    value={license_plate}
-                    onChange={(e) => {
-                      setLicensePlate(e.target.value);
-                    }}
-                  /> */}
                 <select
-                  id='role'
-                  name='role'
-                  autoComplete='country-name'
+                  id='license_plate'
+                  name='license_plate'
+                  autoComplete='license_plate'
                   className='p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6'
+                  value={license_plate}
                   onChange={(e) => {
                     setLicensePlate(e.target.value);
                   }}
@@ -217,6 +206,9 @@ const updateServicing = ({ servicing }) => {
 
       <div className='my-6 flex items-center justify-center gap-x-6'>
         <button
+          onClick={() => {
+            router.push('http://localhost:3000/servicing/');
+          }}
           type='button'
           className='text-sm font-semibold leading-6 text-gray-900'
         >
@@ -235,10 +227,10 @@ const updateServicing = ({ servicing }) => {
 
 export default updateServicing;
 
-export async function getServerSideProps({ req }) {
-  let servicingId = req.url.slice(11, 12);
+export async function getServerSideProps(context) {
+  let { id } = context.query;
 
-  const res = await fetch(`http://localhost:3000/api/servicing/${servicingId}`);
+  const res = await fetch(`http://localhost:3000/api/servicing/${id}`);
   const data = await res.json();
 
   return {

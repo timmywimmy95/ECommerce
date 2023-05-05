@@ -21,6 +21,7 @@ export default async function handler(req, res) {
     }
   }
   if (req.method === 'GET') {
+    let id = parseInt(req.query.id);
     try {
       const data = await pool.query('SELECT * FROM servicing WHERE id = $1', [
         id,
