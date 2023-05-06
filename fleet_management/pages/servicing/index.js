@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { AiFillCar } from 'react-icons/ai';
 import { FaMotorcycle } from 'react-icons/fa';
@@ -7,52 +7,101 @@ import SvcCard from '@/components/SvcCard';
 import Link from 'next/link';
 
 const servicing = ({ servicing }) => {
-  const rows = [
-    { id: 1, col1: 'Hello', col2: 'World' },
-    { id: 2, col1: 'DataGridPro', col2: 'is Awesome' },
-    { id: 3, col1: 'MUI', col2: 'is Amazing' },
+  // console.log(servicing);
+  const keys = Object.keys(servicing[0]);
+  const keyLabels = {
+    servicedate: 'Service Date',
+    description: 'Description',
+    cost: 'Cost',
+    mileage: 'Mileage',
+    license_plate: 'License Plate',
+  };
+
+  const searchFilterKeys = keys.filter(
+    (key) =>
+      key === 'servicedate' ||
+      key === 'description' ||
+      key === 'cost' ||
+      key === 'mileage' ||
+      key === 'license_plate'
+  );
+  const beautifiedSearchFilterKeys = searchFilterKeys.map(
+    (key) => keyLabels[key]
+  );
+
+  const sortOptions = [
+    {
+      value: 'servicedate-asc',
+      label: 'Sort by Service Date (Earliest First)',
+    },
+    { value: 'servicedate-dsc', label: 'Sort by Service Date (Latest First)' },
+    { value: 'cost-asc', label: 'Sort by Cost (Low to High)' },
+    { value: 'cost-dsc', label: 'Sort by Cost (High to Low)' },
+    { value: 'mileage-asc', label: 'Sort by Mileage (Low to High)' },
+    { value: 'mileage-dsc', label: 'Sort by Mileage (High to Low)' },
   ];
 
-  const columns = [
-    {
-      width: 60,
-      renderCell: () => (
-        <>
-          <button>
-            <AiFillCar />
-            {/* Insert conditional rendering, car or bike */}
-          </button>
-        </>
-      ),
-    },
-    { field: 'col2', headerName: 'License Plate', width: 150 },
-    { field: 'col3', headerName: 'Mileage (km)', width: 200 },
-    { field: 'col4', headerName: 'Last Serviced', width: 200 },
-    { field: 'col5', headerName: 'Mileage Left', width: 200 },
-  ];
+  const [query, setQuery] = useState('');
+  const [filterBy, setFilterBy] = useState(searchFilterKeys[0]);
+  const [selectedSortOption, setSelectedSortOption] = useState(
+    sortOptions[1].value
+  );
+  console.log(searchFilterKeys);
+  let filteredServicing = servicing.filter((service) => {
+    console.log(filterBy);
+    switch (filterBy) {
+      case 'Cost':
+        return String(service[filterBy]).includes(query);
+        break;
+      case 'Mileage':
+        return String(service[filterBy]).includes(query);
+        break;
+      case 'Description':
+        return String(service[filterBy]).includes(query);
+        break;
+      case 'servicedate':
+        let serviceDate = new Date(service[filterBy]);
+        let serviceMonth = serviceDate.toLocaleString('default', {
+          month: 'short',
+        });
+        let serviceDay = ('0' + serviceDate.getDate()).slice(-2);
+        let serviceYear = serviceDate.getFullYear();
+        let returnedServiceDate = `${serviceDay} ${serviceMonth} ${serviceYear}`;
+        // console.log(returnedDate, 'coe');
+        return returnedServiceDate.includes(query);
+        break;
+
+      default:
+        return String(service[filterBy]).includes(query);
+        break;
+    }
+  });
+  console.log(filteredServicing);
+  let displayedServicing =
+    filteredServicing.length !== 0 ? filteredServicing : servicing;
+  // console.log(filteredServicing, query, filterBy);
+
+  displayedServicing.sort((a, b) => {
+    switch (selectedSortOption) {
+      case 'servicedate-asc':
+        return new Date(a.servicedate) - new Date(b.servicedate);
+      case 'servicedate-dsc':
+        return new Date(b.servicedate) - new Date(a.servicedate);
+      case 'cost-asc':
+        return a.cost - b.cost;
+      case 'cost-dsc':
+        return b.cost - a.cost;
+      case 'mileage-asc':
+        return a.mileage - b.mileage;
+      case 'mileage-dsc':
+        return b.mileage - a.mileage;
+      default:
+        return 0;
+    }
+  });
+  // console.log(displayedServicing);
 
   return (
-    // <div className='bg-gray-100 min-h-screen'>
-    //   <div className='flex justify-between p-4'>
-    //     <h2 className='font-bold text-lg'>Servicing</h2>
-    //     <button className='flex items-center bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded'>
-    //       <RiAddFill />
-    //       <h2>Add Servicing</h2>
-    //     </button>
-    //   </div>
-
-    //   <div className='p-4'>
-    //     <div className='w-full m-auto p-4 border rounded-lg bg-white overflow-y-auto'>
-    //       {/* <div className='my-3 p-2 grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 items-center justify-between cursor-pointer'>
-    //         <span>License Plate</span>
-    //         <span>Mileage (km)</span>
-    //         <span>Last Serviced</span>
-    //         <span>Mileage Left</span>
-    //       </div> */}
-    //       <DataGrid rows={rows} columns={columns} />
-    //     </div>
-    //   </div>
-    // </div>
     <>
       <div className='bg-gray-100 min-h-screen'>
         <div className='flex justify-between p-4'>
@@ -66,8 +115,42 @@ const servicing = ({ servicing }) => {
         </div>
 
         <div className='flex justify-between p-4'>
-          <div className='flex flex-wrap justify-between w-full m-auto p-4 border rounded-lg bg-white overflow-y-auto'>
-            {servicing.map((service) => {
+          <div className='flex flex-wrap justify-start w-full m-auto p-4 border rounded-lg bg-white overflow-y-auto'>
+            <div className=' w-full m-auto p-4 flex flex-col items-start gap-5 md:gap-0'>
+              <input
+                onChange={(e) => {
+                  setQuery(e.target.value);
+                }}
+                type='text'
+                placeholder='Search...'
+              />
+              <select
+                name='filterBy'
+                id='filterBy'
+                placeholder='Search By'
+                className='mt-4 p-4 block w-56 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6'
+                onChange={(e) => {
+                  setFilterBy(e.target.value);
+                }}
+              >
+                {searchFilterKeys.map((key) => {
+                  return <option key={key}>{key}</option>;
+                })}
+              </select>
+
+              <select
+                className='mt-4 p-4 block w-56 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6'
+                value={selectedSortOption}
+                onChange={(e) => setSelectedSortOption(e.target.value)}
+              >
+                {sortOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+            {displayedServicing.map((service) => {
               return (
                 <div key={service.id}>
                   <SvcCard className='w-6' data={service} />

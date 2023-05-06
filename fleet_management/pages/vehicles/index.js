@@ -58,7 +58,7 @@ const vehicles = ({ vehicles }) => {
   });
   let displayedVehicles =
     filteredVehicles.length !== 0 ? filteredVehicles : vehicles;
-  console.log(filteredVehicles, query, filterBy);
+  // console.log(filteredVehicles, query, filterBy);
 
   // console.log(filteredVehicles, filterBy, query, 'filtered veh');
 
@@ -75,8 +75,8 @@ const vehicles = ({ vehicles }) => {
       </div>
 
       <div className='p-4'>
-        <div className='flex flex-wrap justify-between w-full m-auto p-4 border rounded-lg bg-white overflow-y-auto'>
-          <div className='w-11/12 m-auto mt-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-5 md:gap-0'>
+        <div className='flex flex-wrap justify-start w-full m-auto p-4 border rounded-lg bg-white overflow-y-auto'>
+          <div className=' w-full m-auto p-4 flex flex-col items-start gap-5 md:gap-0'>
             <input
               onChange={(e) => {
                 setQuery(e.target.value);
@@ -88,7 +88,7 @@ const vehicles = ({ vehicles }) => {
               name='filterBy'
               id='filterBy'
               placeholder='Search By'
-              className='p-4 block w-1/5 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6'
+              className='mt-4 p-4 block w-56 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6'
               onChange={(e) => {
                 setFilterBy(e.target.value);
               }}
