@@ -48,7 +48,7 @@ import Dropdown from './Dropdown';
 import { useRouter } from 'next/router';
 
 const VehCard = ({ data }) => {
-  console.log(data);
+  // console.log(data);
   let router = useRouter();
   let coe_date = new Date(data.coe);
   let coe_month = coe_date.toLocaleString('default', { month: 'short' });
