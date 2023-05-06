@@ -19,7 +19,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Home Page</title>
+        <title>Landing Page</title>
       </Head>
       <main className='bg-gray-100 min-h-screen overflow-hidden'>
         <Header />
