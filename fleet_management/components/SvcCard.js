@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { GiFullMotorcycleHelmet } from 'react-icons/gi';
 import {
   BsFillCarFrontFill,
@@ -50,7 +50,7 @@ const SvcCard = ({ data }) => {
         )}
         <Dropdown
           info={data}
-          handleDelete={(e) => handleDelete(e)}
+          handleDelete={handleDelete}
           handleEdit={(e) => handleEdit(e)}
         />
       </div>
