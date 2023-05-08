@@ -6,6 +6,7 @@ const addServicing = () => {
   const [description, setDescription] = useState('');
   const [mileage, setMileage] = useState('');
   const [cost, setCost] = useState('');
+  const [status, setStatus] = useState('');
   const [records, setRecords] = useState([]);
 
   let plates = [];
@@ -47,18 +48,6 @@ const addServicing = () => {
                 Vehicle Number
               </label>
               <div className='mt-2'>
-                {/* <input
-                    type='text'
-                    name='license_plate'
-                    id='license_plate'
-                    autoComplete='license_plate'
-                    className='p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6'
-                    placeholder='Do not leave any spaces'
-                    value={license_plate}
-                    onChange={(e) => {
-                      setLicensePlate(e.target.value);
-                    }}
-                  /> */}
                 <select
                   id='license_plate'
                   name='license_plate'
@@ -72,6 +61,30 @@ const addServicing = () => {
                     return <option key={record}>{record}</option>;
                   })}
                   {/* <option>{plates[0]}</option> */}
+                </select>
+              </div>
+            </div>
+
+            <div className='sm:col-span-4'>
+              <label
+                htmlFor='status'
+                className='block text-sm font-medium leading-6 text-gray-900'
+              >
+                Status
+              </label>
+              <div className='mt-2'>
+                <select
+                  id='status'
+                  name='status'
+                  autoComplete='status'
+                  className='p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6'
+                  value={status}
+                  onChange={(e) => {
+                    setStatus(e.target.value);
+                  }}
+                >
+                  <option>Available</option>
+                  <option>In Service</option>
                 </select>
               </div>
             </div>

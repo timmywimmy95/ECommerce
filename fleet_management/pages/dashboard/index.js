@@ -10,12 +10,31 @@ import Header from '@/components/Header';
 import TopCards from '@/components/TopCards';
 import BarChart from '@/components/BarChart';
 import RecentOrders from '@/components/RecentOrders';
+import { useState, useEffect } from 'react';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export default function Home() {
+export default function Home({ vehicles }) {
   // const [session, setSession] = useState(false);
   const { data: session } = useSession();
+  console.log(vehicles);
+
+  useEffect(() => {
+    fetch('/api/servicing/update')
+      .then((response) => response.json())
+      .then((data) => {
+        if (data) {
+          console.log(data);
+        } else {
+          console.log(data);
+          console.log('Error updating vehicles table');
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
   return (
     <>
       <Head>
@@ -101,7 +120,11 @@ export async function getServerSideProps({ req }) {
       },
     };
   }
+
+  const res = await fetch(`http://localhost:3000/api/vehicles/`);
+  const data = await res.json();
+
   return {
-    props: { session },
+    props: { session, vehicles: data },
   };
 }

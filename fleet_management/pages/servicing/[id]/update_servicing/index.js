@@ -6,12 +6,14 @@ const updateServicing = ({ servicing }) => {
   let month = ('0' + (date.getMonth() + 1)).slice(-2);
   let day = ('0' + date.getDate()).slice(-2);
   let year = date.getFullYear();
+  console.log(servicing);
 
   const [license_plate, setLicensePlate] = useState(servicing.license_plate);
   const [servicedate, setServiceDate] = useState(`${year}-${month}-${day}`);
   const [description, setDescription] = useState(servicing.description);
   const [mileage, setMileage] = useState(servicing.mileage);
   const [cost, setCost] = useState(servicing.cost);
+  const [status, setStatus] = useState(servicing.status);
   const [records, setRecords] = useState([]);
 
   const router = useRouter();
@@ -28,6 +30,7 @@ const updateServicing = ({ servicing }) => {
         description: description,
         mileage: mileage,
         cost: cost,
+        status: status,
       }),
     };
     await fetch(`http://localhost:3000/api/servicing/${servicing.id}`, options)
@@ -90,6 +93,29 @@ const updateServicing = ({ servicing }) => {
                     return <option key={record}>{record}</option>;
                   })}
                   {/* <option>{plates[0]}</option> */}
+                </select>
+              </div>
+            </div>
+            <div className='sm:col-span-4'>
+              <label
+                htmlFor='status'
+                className='block text-sm font-medium leading-6 text-gray-900'
+              >
+                Status
+              </label>
+              <div className='mt-2'>
+                <select
+                  id='status'
+                  name='status'
+                  autoComplete='status'
+                  className='p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6'
+                  value={status}
+                  onChange={(e) => {
+                    setStatus(e.target.value);
+                  }}
+                >
+                  <option>Available</option>
+                  <option>In Service</option>
                 </select>
               </div>
             </div>

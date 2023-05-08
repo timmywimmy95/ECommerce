@@ -15,7 +15,8 @@ export default async function handler(req, res) {
     }
   }
   if (req.method === 'POST') {
-    let { servicedate, description, cost, license_plate, mileage } = req.body;
+    let { servicedate, description, cost, license_plate, mileage, status } =
+      req.body;
     try {
       const vehQuery = await pool.query(
         'SELECT id FROM vehicles WHERE license_plate = $1',
@@ -25,8 +26,16 @@ export default async function handler(req, res) {
       const vehicleId = vehQuery.rows[0].id;
 
       const data = await pool.query(
-        'INSERT INTO servicing (servicedate, description, cost, mileage, license_plate, veh_id) VALUES ($1, $2, $3, $4, $5, $6)',
-        [servicedate, description, cost, mileage, license_plate, vehicleId]
+        'INSERT INTO servicing (servicedate, description, cost, mileage, license_plate, status, veh_id) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+        [
+          servicedate,
+          description,
+          cost,
+          mileage,
+          license_plate,
+          status,
+          vehicleId,
+        ]
       );
       res.status(200).redirect('http://localhost:3000/servicing/');
     } catch (err) {
