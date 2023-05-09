@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { getSession, useSession, signOut } from 'next-auth/react';
 
-const profile = ({ user }) => {
+const profile = ({ user, session }) => {
   const router = useRouter();
   let profile = user[0];
   const [username, setUsername] = useState(profile.username);
@@ -247,12 +247,22 @@ export default profile;
 export async function getServerSideProps({ req }) {
   const session = await getSession({ req });
 
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  }
+
   const res = await fetch(`http://localhost:3000/api/users/${session.user.id}`);
   const data = await res.json();
 
   return {
     props: {
       user: data,
+      session,
     },
   };
 }

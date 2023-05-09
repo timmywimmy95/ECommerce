@@ -7,8 +7,15 @@ import { GiCartwheel, GiSpanner } from 'react-icons/gi';
 import { HiOutlineShoppingBag } from 'react-icons/hi';
 import { FiSettings } from 'react-icons/fi';
 import { getSession, useSession, signOut } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 const Sidebar = ({ children }) => {
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    await signOut({ redirect: false }); // sign the user out and don't redirect
+    router.push('/login'); // redirect to the desired page
+  };
   return (
     <>
       <div className='flex'>
@@ -35,7 +42,7 @@ const Sidebar = ({ children }) => {
                 <GiSpanner size={20} />
               </div>
             </Link>
-            <button onClick={() => signOut()}>
+            <button onClick={handleSignOut}>
               <div className=' bg-gray-100 hover:bg-gray-500 cursor-pointer p-3 mt-4 rounded-lg inline-block'>
                 <FaSignOutAlt size={20} />
               </div>

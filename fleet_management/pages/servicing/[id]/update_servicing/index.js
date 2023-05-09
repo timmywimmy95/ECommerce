@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { getSession } from 'next-auth/react';
 
 const updateServicing = ({ servicing }) => {
   let date = new Date(servicing.servicedate);
@@ -255,6 +256,15 @@ export default updateServicing;
 
 export async function getServerSideProps(context) {
   let { id } = context.query;
+  const session = await getSession(context.req);
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  }
 
   const res = await fetch(`http://localhost:3000/api/servicing/${id}`);
   const data = await res.json();
@@ -265,3 +275,21 @@ export async function getServerSideProps(context) {
     },
   };
 }
+
+// export async function getServerSideProps({ req }) {
+//   const session = await getSession({ req });
+//   if (!session) {
+//     return {
+//       redirect: {
+//         destination: '/login',
+//         permanent: false,
+//       },
+//     };
+//   }
+
+//   return {
+//     props: {
+//       session,
+//     },
+//   };
+// }

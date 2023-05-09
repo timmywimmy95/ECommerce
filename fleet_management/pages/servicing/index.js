@@ -5,8 +5,9 @@ import { FaMotorcycle } from 'react-icons/fa';
 import { RiAddFill } from 'react-icons/ri';
 import SvcCard from '@/components/SvcCard';
 import Link from 'next/link';
+import { getSession, useSession, signOut } from 'next-auth/react';
 
-const servicing = ({ servicing }) => {
+const servicing = ({ servicing, session }) => {
   // console.log(servicing);
   const keys = Object.keys(servicing[0]);
   const keyLabels = {
@@ -76,7 +77,7 @@ const servicing = ({ servicing }) => {
         break;
     }
   });
-  console.log(filteredServicing);
+  // console.log(filteredServicing);
   let displayedServicing =
     filteredServicing.length !== 0 ? filteredServicing : servicing;
   // console.log(filteredServicing, query, filterBy);
@@ -166,13 +167,23 @@ const servicing = ({ servicing }) => {
 
 export default servicing;
 
-export async function getServerSideProps() {
+export async function getServerSideProps({ req }) {
   const res = await fetch('http://localhost:3000/api/servicing');
   const data = await res.json();
+  const session = await getSession({ req });
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  }
 
   return {
     props: {
       servicing: data,
+      session,
     },
   };
 }

@@ -32,7 +32,7 @@ const login = () => {
       email: values.email,
       username: values.username,
       password: values.password,
-      callbackUrl: '/',
+      callbackUrl: '/dashboard',
     });
     if (status.ok) {
       router.push(status.url);

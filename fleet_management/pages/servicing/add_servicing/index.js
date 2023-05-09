@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { getSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 const addServicing = () => {
   const [license_plate, setLicensePlate] = useState('');
@@ -27,6 +29,13 @@ const addServicing = () => {
   useEffect(() => {
     licensePlates();
   }, []);
+
+  const router = useRouter();
+
+  const handleCancel = (e) => {
+    e.preventDefault();
+    router.push('/servicing');
+  };
 
   return (
     <form action={`http://localhost:3000/api/servicing`} method='POST'>
@@ -203,6 +212,7 @@ const addServicing = () => {
         <button
           type='button'
           className='text-sm font-semibold leading-6 text-gray-900'
+          onClick={handleCancel}
         >
           Cancel
         </button>
@@ -218,3 +228,21 @@ const addServicing = () => {
 };
 
 export default addServicing;
+
+export async function getServerSideProps({ req }) {
+  const session = await getSession({ req });
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      session,
+    },
+  };
+}

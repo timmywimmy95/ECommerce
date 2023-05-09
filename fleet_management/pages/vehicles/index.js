@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import VehSvcCard from '@/components/VehCard';
 import { display } from '@mui/system';
+import { getSession } from 'next-auth/react';
 
 const handleEvent = (
   e,
@@ -19,7 +20,7 @@ const handleEvent = (
   router.push('/');
 };
 
-const vehicles = ({ vehicles }) => {
+const vehicles = ({ vehicles, session }) => {
   // console.log(vehicles);
   const keys = Object.keys(vehicles[0]);
   const searchFilterKeys = keys.filter(
@@ -114,13 +115,23 @@ const vehicles = ({ vehicles }) => {
 
 export default vehicles;
 
-export async function getServerSideProps() {
+export async function getServerSideProps({ req }) {
+  const session = await getSession({ req });
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  }
   const vehRes = await fetch('http://localhost:3000/api/vehicles');
   const vehData = await vehRes.json();
 
   return {
     props: {
       vehicles: vehData,
+      session,
     },
   };
 }

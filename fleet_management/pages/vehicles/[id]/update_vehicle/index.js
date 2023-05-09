@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { getSession } from 'next-auth/react';
 
 const updateServicing = ({ vehicle }) => {
   let coe_date = new Date(vehicle.coe);
@@ -270,6 +271,15 @@ export default updateServicing;
 
 export async function getServerSideProps(context) {
   let { id } = context.query;
+  const session = await getSession(context.req);
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  }
 
   const res = await fetch(`http://localhost:3000/api/vehicles/${id}`);
   const data = await res.json();

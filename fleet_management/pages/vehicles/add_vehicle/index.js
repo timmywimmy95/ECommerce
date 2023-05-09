@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
+import { getSession } from 'next-auth/react';
 
 const addVehicle = () => {
   const router = useRouter();
@@ -10,25 +11,6 @@ const addVehicle = () => {
   const [coe, setCOE] = useState('');
   const [road_tax, setRoadTax] = useState([]);
   const [license_plate, setLicensePlate] = useState([]);
-
-  // let plates = [];
-  // async function licensePlates() {
-  //   const options = {
-  //     method: 'GET',
-  //     headers: { 'content-type': 'application/json' },
-  //   };
-  //   await fetch(`http://localhost:3000/api/vehicles/`, options)
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       data.map((plate) => {
-  //         return plates.push(plate.license_plate);
-  //       });
-  //       setRecords(plates);
-  //     });
-  // }
-  // useEffect(() => {
-  //   licensePlates();
-  // }, []);
 
   return (
     <form action={`http://localhost:3000/api/vehicles`} method='POST'>
@@ -228,3 +210,21 @@ const addVehicle = () => {
 };
 
 export default addVehicle;
+
+export async function getServerSideProps({ req }) {
+  const session = await getSession({ req });
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      session,
+    },
+  };
+}
