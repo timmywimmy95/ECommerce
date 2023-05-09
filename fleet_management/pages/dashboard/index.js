@@ -14,10 +14,9 @@ import { useState, useEffect } from 'react';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export default function Home({ vehicles }) {
+export default function Home({ vehicles, figures }) {
   // const [session, setSession] = useState(false);
   const { data: session } = useSession();
-  console.log(vehicles);
 
   return (
     <>
@@ -30,7 +29,7 @@ export default function Home({ vehicles }) {
         {
           //TO DO. ADD USER AND GUEST COMPONENT
         }
-        <TopCards />
+        <TopCards figures={figures} />
         <div className='p-4 grid md:grid-cols-3 grid-cols-1 gap-4'>
           <BarChart />
           <RecentOrders updatedVehicles={vehicles} />
@@ -108,7 +107,12 @@ export async function getServerSideProps({ req }) {
   const res = await fetch(`http://localhost:3000/api/servicing/update`);
   const data = await res.json();
 
+  const servicingNumbers = await fetch(
+    `http://localhost:3000/api/vehicles/update`
+  );
+  const servicingNumbersData = await servicingNumbers.json();
+
   return {
-    props: { session, vehicles: data },
+    props: { session, vehicles: data, figures: servicingNumbersData },
   };
 }
