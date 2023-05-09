@@ -26,7 +26,24 @@ export default async function handler(req, res) {
         WHERE last_service IS NOT NULL;
       `);
 
-      const data = await pool.query(`SELECT * FROM vehicles`);
+      await pool.query(`
+        UPDATE vehicles v
+        SET status = 
+          CASE
+            WHEN v.next_service_date <= CURRENT_DATE THEN 'Overdue'
+          WHEN v.next_service_date <= (now() + INTERVAL '30 Day') THEN 'Upcoming'
+            ELSE 'Up to Date'
+          END
+        WHERE EXISTS (
+          SELECT 1
+          FROM servicing s
+          WHERE s.veh_id = v.id
+        );
+      `);
+
+      const data =
+        await pool.query(`SELECT * FROM vehicles ORDER BY next_service_date ASC;
+      `);
 
       // Send a success response to the client
       res.status(200).json(data.rows);

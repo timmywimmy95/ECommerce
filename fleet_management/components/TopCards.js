@@ -1,35 +1,36 @@
 import React from 'react';
+import TopCard from './TopCard';
+import { longWeekends } from '../data/PH';
 
 const TopCards = () => {
+  console.log(longWeekends, 'lgwkend');
+  const upcomingLgWkend = longWeekends.find((holiday) => {
+    return holiday.date > new Date();
+  });
+
   return (
-    <div className='grid lg:grid-cols-5 gap-4 p-4'>
-      <div className='lg:col-span-2 col-span-1 bg-white flex justify-between w-full border p-4 rounded-lg'>
-        <div className='flex flex-col w-full pb-4'>
-          <p className='text-2xl font-bold'>$7,846</p>
-          <p className='text-gray-600'>Daily Revenue</p>
-        </div>
-        <p className='bg-green-200 flex justify-center items-center p-2 rounded-lg'>
-          <span className='text-green-700 text-lg'>+18%</span>
-        </p>
-      </div>
-      <div className='lg:col-span-2 col-span-1 bg-white flex justify-between w-full border p-4 rounded-lg'>
-        <div className='flex flex-col w-full pb-4'>
-          <p className='text-2xl font-bold'>$1,437</p>
-          <p className='text-gray-600'>YTD Revenue</p>
-        </div>
-        <p className='bg-green-200 flex justify-center items-center p-2 rounded-lg'>
-          <span className='text-green-700 text-lg'>+11%</span>
-        </p>
-      </div>
-      <div className='bg-white flex justify-between w-full border p-4 rounded-lg'>
-        <div className='flex flex-col w-full pb-4'>
-          <p className='text-2xl font-bold'>11,000</p>
-          <p className='text-gray-600'>Customers</p>
-        </div>
-        <p className='bg-green-200 flex justify-center items-center p-2 rounded-lg'>
-          <span className='text-green-700 text-lg'>+5%</span>
-        </p>
-      </div>
+    <div className='grid lg:grid-cols-3 gap-4 p-4'>
+      <TopCard
+        className='lg:col-span-2 col-span-1 bg-white flex justify-between w-full border p-4 rounded-lg'
+        figure={upcomingLgWkend.holiday}
+        addLine={`${upcomingLgWkend.date.getDate()}-${
+          upcomingLgWkend.date.getMonth() + 1
+        }-${upcomingLgWkend.date.getFullYear()}`}
+        title='Upcoming Long Weekend'
+      />
+      <TopCard
+        className='lg:col-span-2 col-span-1 bg-white flex justify-between w-full border p-4 rounded-lg'
+        title='YTD Revenue'
+        figure='1,437'
+        percentage='+11'
+      />
+
+      <TopCard
+        className='lg:col-span-2 col-span-1 bg-white flex justify-between w-full border p-4 rounded-lg'
+        title='Customers'
+        figure='11,000'
+        percentage='+5'
+      />
     </div>
   );
 };

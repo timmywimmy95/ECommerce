@@ -9,7 +9,7 @@ import { useRouter } from 'next/router';
 import Header from '@/components/Header';
 import TopCards from '@/components/TopCards';
 import BarChart from '@/components/BarChart';
-import RecentOrders from '@/components/RecentOrders';
+import RecentOrders from '@/components/UpcomingServicings';
 import { useState, useEffect } from 'react';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -18,22 +18,6 @@ export default function Home({ vehicles }) {
   // const [session, setSession] = useState(false);
   const { data: session } = useSession();
   console.log(vehicles);
-
-  useEffect(() => {
-    fetch('/api/servicing/update')
-      .then((response) => response.json())
-      .then((data) => {
-        if (data) {
-          console.log(data);
-        } else {
-          console.log(data);
-          console.log('Error updating vehicles table');
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
 
   return (
     <>
@@ -49,7 +33,7 @@ export default function Home({ vehicles }) {
         <TopCards />
         <div className='p-4 grid md:grid-cols-3 grid-cols-1 gap-4'>
           <BarChart />
-          <RecentOrders />
+          <RecentOrders updatedVehicles={vehicles} />
         </div>
       </main>
 
@@ -76,7 +60,7 @@ function Guest() {
 }
 
 function User({ session }) {
-  console.log(session);
+  // console.log(session);
   return (
     <main className='container mx-auto text-center py-20'>
       <h3 className='text-4xl font-bold'>Authorize User Homepage</h3>
@@ -121,7 +105,7 @@ export async function getServerSideProps({ req }) {
     };
   }
 
-  const res = await fetch(`http://localhost:3000/api/vehicles/`);
+  const res = await fetch(`http://localhost:3000/api/servicing/update`);
   const data = await res.json();
 
   return {

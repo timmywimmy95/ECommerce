@@ -9,7 +9,7 @@ import { useRouter } from 'next/router';
 import Header from '@/components/Header';
 import TopCards from '@/components/TopCards';
 import BarChart from '@/components/BarChart';
-import RecentOrders from '@/components/RecentOrders';
+import RecentOrders from '@/components/UpcomingServicings';
 
 const inter = Inter({ subsets: ['latin'] });
 
