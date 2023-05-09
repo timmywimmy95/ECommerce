@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { getSession } from 'next-auth/react';
 
-const updateServicing = ({ vehicle }) => {
+const updateServicing = ({ vehicle, session }) => {
   let coe_date = new Date(vehicle.coe);
   let coe_month = ('0' + (coe_date.getMonth() + 1)).slice(-2);
   let coe_day = ('0' + coe_date.getDate()).slice(-2);
@@ -270,8 +270,9 @@ const updateServicing = ({ vehicle }) => {
 export default updateServicing;
 
 export async function getServerSideProps(context) {
+  console.log(context);
   let { id } = context.query;
-  const session = await getSession(context.req);
+  const session = await getSession(context);
   if (!session) {
     return {
       redirect: {
@@ -287,6 +288,7 @@ export async function getServerSideProps(context) {
   return {
     props: {
       vehicle: data,
+      session,
     },
   };
 }

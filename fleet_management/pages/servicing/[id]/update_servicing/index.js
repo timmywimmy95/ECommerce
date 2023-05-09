@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { getSession } from 'next-auth/react';
 
-const updateServicing = ({ servicing }) => {
+const updateServicing = ({ servicing, session }) => {
   let date = new Date(servicing.servicedate);
   let month = ('0' + (date.getMonth() + 1)).slice(-2);
   let day = ('0' + date.getDate()).slice(-2);
@@ -256,7 +256,7 @@ export default updateServicing;
 
 export async function getServerSideProps(context) {
   let { id } = context.query;
-  const session = await getSession(context.req);
+  const session = await getSession(context);
   if (!session) {
     return {
       redirect: {
@@ -272,6 +272,7 @@ export async function getServerSideProps(context) {
   return {
     props: {
       servicing: data,
+      session,
     },
   };
 }
