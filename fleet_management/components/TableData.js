@@ -1,7 +1,7 @@
 import React from 'react';
 import { GiFullMotorcycleHelmet } from 'react-icons/gi';
 import { BsFillCarFrontFill } from 'react-icons/bs';
-import { FaShoppingBag } from 'react-icons/fa';
+
 import Link from 'next/link';
 const TableData = ({ vehicle }) => {
   let nextSvcDate = new Date(vehicle.next_service_date);
