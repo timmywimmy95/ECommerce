@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { getSession, useSession, signOut } from 'next-auth/react';
+import Head from 'next/head';
 
 const profile = ({ user, session }) => {
   const router = useRouter();
@@ -62,133 +63,137 @@ const profile = ({ user, session }) => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className='py-3 px-8 '>
-        <div className='border-b border-gray-900/10 pb-12'>
-          <h2 className='text-base font-semibold leading-7 text-gray-900'>
-            Profile Page
-          </h2>
-          <p className='mt-1 text-sm leading-6 text-gray-600'>
-            You will be required to login again after saving your updated
-            details.
-          </p>
+    <>
+      <Head>
+        <title>Update Profile</title>
+      </Head>
+      <form onSubmit={handleSubmit}>
+        <div className='py-3 px-8 '>
+          <div className='border-b border-gray-900/10 pb-12'>
+            <h2 className='text-base font-semibold leading-7 text-gray-900'>
+              Profile Page
+            </h2>
+            <p className='mt-1 text-sm leading-6 text-gray-600'>
+              You will be required to login again after saving your updated
+              details.
+            </p>
 
-          <div className='mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6'>
-            <div className='sm:col-span-4'>
-              <label
-                htmlFor='username'
-                className='block text-sm font-medium leading-6 text-gray-900'
-              >
-                Username
-              </label>
-              <div className='mt-2'>
-                <div className='flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 sm:max-w-md'>
-                  <input
-                    type='text'
-                    name='username'
-                    id='username'
-                    autoComplete='username'
-                    className='p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6'
-                    value={username}
-                    onChange={handleChange}
-                  />
+            <div className='mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6'>
+              <div className='sm:col-span-4'>
+                <label
+                  htmlFor='username'
+                  className='block text-sm font-medium leading-6 text-gray-900'
+                >
+                  Username
+                </label>
+                <div className='mt-2'>
+                  <div className='flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 sm:max-w-md'>
+                    <input
+                      type='text'
+                      name='username'
+                      id='username'
+                      autoComplete='username'
+                      className='p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6'
+                      value={username}
+                      onChange={handleChange}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div className='py-4 border-b border-gray-900/10'>
-          <h2 className='text-base font-semibold leading-7 text-gray-900'>
-            Personal Information
-          </h2>
+          <div className='py-4 border-b border-gray-900/10'>
+            <h2 className='text-base font-semibold leading-7 text-gray-900'>
+              Personal Information
+            </h2>
 
-          <div className='mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6'>
-            <div className='sm:col-span-3'>
-              <label
-                htmlFor='first_name'
-                className='block text-sm font-medium leading-6 text-gray-900'
-              >
-                First name
-              </label>
-              <div className='mt-2'>
-                <input
-                  type='text'
-                  name='first_name'
-                  id='first_name'
-                  autoComplete='given-name'
-                  className='p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6'
-                  value={firstName ? firstName : ''}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className='sm:col-span-3'>
-              <label
-                htmlFor='last_name'
-                className='block text-sm font-medium leading-6 text-gray-900'
-              >
-                Last name
-              </label>
-              <div className='mt-2'>
-                <input
-                  type='text'
-                  name='last_name'
-                  id='last_name'
-                  autoComplete='family-name'
-                  className='p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6'
-                  value={lastName ? lastName : ''}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className='sm:col-span-4'>
-              <label
-                htmlFor='email'
-                className='block text-sm font-medium leading-6 text-gray-900'
-              >
-                Email address
-              </label>
-              <div className='mt-2'>
-                <input
-                  id='email'
-                  name='email'
-                  type='email'
-                  autoComplete='email'
-                  className='p-4 block w-3/6 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400    sm:text-sm sm:leading-6'
-                  value={email}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-
-            <div className='sm:col-span-3'>
-              <label
-                htmlFor='role'
-                className='block text-sm font-medium leading-6 text-gray-900'
-              >
-                Role
-              </label>
-              <div className='mt-2 '>
-                <select
-                  id='role'
-                  name='role'
-                  autoComplete='country-name'
-                  className='p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6'
-                  value={role}
-                  onChange={handleChange}
+            <div className='mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6'>
+              <div className='sm:col-span-3'>
+                <label
+                  htmlFor='first_name'
+                  className='block text-sm font-medium leading-6 text-gray-900'
                 >
-                  <option>admin</option>
-                  <option>user</option>
-                </select>
+                  First name
+                </label>
+                <div className='mt-2'>
+                  <input
+                    type='text'
+                    name='first_name'
+                    id='first_name'
+                    autoComplete='given-name'
+                    className='p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6'
+                    value={firstName ? firstName : ''}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+
+              <div className='sm:col-span-3'>
+                <label
+                  htmlFor='last_name'
+                  className='block text-sm font-medium leading-6 text-gray-900'
+                >
+                  Last name
+                </label>
+                <div className='mt-2'>
+                  <input
+                    type='text'
+                    name='last_name'
+                    id='last_name'
+                    autoComplete='family-name'
+                    className='p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6'
+                    value={lastName ? lastName : ''}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+
+              <div className='sm:col-span-4'>
+                <label
+                  htmlFor='email'
+                  className='block text-sm font-medium leading-6 text-gray-900'
+                >
+                  Email address
+                </label>
+                <div className='mt-2'>
+                  <input
+                    id='email'
+                    name='email'
+                    type='email'
+                    autoComplete='email'
+                    className='p-4 block w-3/6 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400    sm:text-sm sm:leading-6'
+                    value={email}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+
+              <div className='sm:col-span-3'>
+                <label
+                  htmlFor='role'
+                  className='block text-sm font-medium leading-6 text-gray-900'
+                >
+                  Role
+                </label>
+                <div className='mt-2 '>
+                  <select
+                    id='role'
+                    name='role'
+                    autoComplete='country-name'
+                    className='p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6'
+                    value={role}
+                    onChange={handleChange}
+                  >
+                    <option>admin</option>
+                    <option>user</option>
+                  </select>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* <div className='py-4 border-b border-gray-900/10 pb-12'>
+          {/* <div className='py-4 border-b border-gray-900/10 pb-12'>
           <h2 className='text-base font-semibold leading-7 text-gray-900'>
             Notifications
           </h2>
@@ -228,26 +233,27 @@ const profile = ({ user, session }) => {
             </fieldset>
           </div>
         </div> */}
-      </div>
+        </div>
 
-      <div className='my-6 flex items-center justify-center gap-x-6'>
-        <button
-          type='button'
-          className='text-sm font-semibold leading-6 text-gray-900'
-          onClick={() => {
-            router.push('http://localhost:3000/');
-          }}
-        >
-          Cancel
-        </button>
-        <button
-          type='submit'
-          className='rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
-        >
-          Save
-        </button>
-      </div>
-    </form>
+        <div className='my-6 flex items-center justify-center gap-x-6'>
+          <button
+            type='button'
+            className='text-sm font-semibold leading-6 text-gray-900'
+            onClick={() => {
+              router.push('http://localhost:3000/');
+            }}
+          >
+            Cancel
+          </button>
+          <button
+            type='submit'
+            className='rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
+          >
+            Save
+          </button>
+        </div>
+      </form>
+    </>
   );
 };
 

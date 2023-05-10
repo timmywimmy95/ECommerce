@@ -21,7 +21,7 @@ export default function Home({ vehicles, figures }) {
   return (
     <>
       <Head>
-        <title>Home Page</title>
+        <title>Dashboard</title>
       </Head>
       <main className='bg-gray-100 min-h-screen overflow-hidden'>
         <Header />

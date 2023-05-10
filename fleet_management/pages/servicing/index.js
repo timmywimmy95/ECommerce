@@ -5,6 +5,7 @@ import { RiAddFill } from 'react-icons/ri';
 import SvcCard from '@/components/SvcCard';
 import Link from 'next/link';
 import { getSession, useSession, signOut } from 'next-auth/react';
+import Head from 'next/head';
 
 const servicing = ({ servicing, role }) => {
   console.log(role, 'svc');
@@ -103,6 +104,9 @@ const servicing = ({ servicing, role }) => {
 
   return (
     <>
+      <Head>
+        <title>Servicing</title>
+      </Head>
       <div className='bg-gray-100 min-h-screen'>
         <div className='flex justify-between p-4'>
           <h2 className='font-bold text-lg'>Servicing Records</h2>

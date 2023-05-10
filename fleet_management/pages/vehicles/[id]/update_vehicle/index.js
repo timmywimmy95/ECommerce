@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { getSession } from 'next-auth/react';
+import Head from 'next/head';
 
 const updateServicing = ({ vehicle, session }) => {
   let coe_date = new Date(vehicle.coe);
@@ -69,201 +70,206 @@ const updateServicing = ({ vehicle, session }) => {
   // }, []);
 
   return (
-    <form onSubmit={updateServicing}>
-      <div className='py-3 px-8 '>
-        <div className='border-b border-gray-900/10 pb-12'>
-          <h2 className='text-base font-semibold leading-7 text-gray-900'>
-            Update Vehicle Records
-          </h2>
+    <>
+      <Head>
+        <title>Update Vehicle</title>
+      </Head>
+      <form onSubmit={updateServicing}>
+        <div className='py-3 px-8 '>
+          <div className='border-b border-gray-900/10 pb-12'>
+            <h2 className='text-base font-semibold leading-7 text-gray-900'>
+              Update Vehicle Records
+            </h2>
 
-          <div className='mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6'>
-            <div className='sm:col-span-3'>
-              <label
-                htmlFor='license_plate'
-                className='block text-sm font-medium leading-6 text-gray-900'
-              >
-                Vehicle Number
-              </label>
-              <div className='mt-2'>
-                <input
-                  type='text'
-                  id='license_plate'
-                  name='license_plate'
-                  autoComplete='license_plate'
-                  className='p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
-                  value={license_plate}
-                  onChange={(e) => {
-                    setLicensePlate(e.target.value);
-                  }}
+            <div className='mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6'>
+              <div className='sm:col-span-3'>
+                <label
+                  htmlFor='license_plate'
+                  className='block text-sm font-medium leading-6 text-gray-900'
                 >
-                  {/* {records.map((record) => {
+                  Vehicle Number
+                </label>
+                <div className='mt-2'>
+                  <input
+                    type='text'
+                    id='license_plate'
+                    name='license_plate'
+                    autoComplete='license_plate'
+                    className='p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
+                    value={license_plate}
+                    onChange={(e) => {
+                      setLicensePlate(e.target.value);
+                    }}
+                  >
+                    {/* {records.map((record) => {
                     return <option key={record}>{record}</option>;
                   })} */}
-                  {/* <option>{plates[0]}</option> */}
-                </input>
+                    {/* <option>{plates[0]}</option> */}
+                  </input>
+                </div>
               </div>
-            </div>
-            <div className='sm:col-span-3'>
-              <label
-                htmlFor='type'
-                className='block text-sm font-medium leading-6 text-gray-900'
-              >
-                Type
-              </label>
-              <div className='mt-2 '>
-                <select
-                  id='type'
-                  name='type'
-                  autoComplete='type'
-                  className='p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6'
-                  value={type}
-                  onChange={(e) => {
-                    setType(e.target.value);
-                  }}
+              <div className='sm:col-span-3'>
+                <label
+                  htmlFor='type'
+                  className='block text-sm font-medium leading-6 text-gray-900'
                 >
-                  <option>motorcycle</option>
-                  <option>car</option>
-                </select>
+                  Type
+                </label>
+                <div className='mt-2 '>
+                  <select
+                    id='type'
+                    name='type'
+                    autoComplete='type'
+                    className='p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6'
+                    value={type}
+                    onChange={(e) => {
+                      setType(e.target.value);
+                    }}
+                  >
+                    <option>motorcycle</option>
+                    <option>car</option>
+                  </select>
+                </div>
               </div>
-            </div>
 
-            <div className='sm:col-span-3'>
-              <label
-                htmlFor='servicedate'
-                className='block text-sm font-medium leading-6 text-gray-900'
-              >
-                COE Date
-              </label>
-              <div className='mt-2'>
-                <div className='flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 '>
-                  <input
-                    type='date'
-                    name='coe'
-                    id='coe'
-                    autoComplete='coe'
-                    className='p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6'
-                    value={coe}
-                    onChange={(e) => {
-                      setCOE(e.target.value);
-                    }}
-                  />
+              <div className='sm:col-span-3'>
+                <label
+                  htmlFor='servicedate'
+                  className='block text-sm font-medium leading-6 text-gray-900'
+                >
+                  COE Date
+                </label>
+                <div className='mt-2'>
+                  <div className='flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 '>
+                    <input
+                      type='date'
+                      name='coe'
+                      id='coe'
+                      autoComplete='coe'
+                      className='p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6'
+                      value={coe}
+                      onChange={(e) => {
+                        setCOE(e.target.value);
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className='sm:col-span-3'>
-              <label
-                htmlFor='servicedate'
-                className='block text-sm font-medium leading-6 text-gray-900'
-              >
-                Road Tax Date
-              </label>
-              <div className='mt-2'>
-                <div className='flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300'>
-                  <input
-                    type='date'
-                    name='road_tax'
-                    id='road_tax'
-                    autoComplete='road_tax'
-                    className='p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6'
-                    value={road_tax}
-                    onChange={(e) => {
-                      setRoadTax(e.target.value);
-                    }}
-                  />
+              <div className='sm:col-span-3'>
+                <label
+                  htmlFor='servicedate'
+                  className='block text-sm font-medium leading-6 text-gray-900'
+                >
+                  Road Tax Date
+                </label>
+                <div className='mt-2'>
+                  <div className='flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300'>
+                    <input
+                      type='date'
+                      name='road_tax'
+                      id='road_tax'
+                      autoComplete='road_tax'
+                      className='p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6'
+                      value={road_tax}
+                      onChange={(e) => {
+                        setRoadTax(e.target.value);
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className='sm:col-span-2'>
-              <label
-                htmlFor='servicedate'
-                className='block text-sm font-medium leading-6 text-gray-900'
-              >
-                Make
-              </label>
-              <div className='mt-2'>
-                <div className='flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 sm:max-w-md'>
-                  <input
-                    type='text'
-                    name='make'
-                    id='make'
-                    autoComplete='make'
-                    className='p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6'
-                    value={make}
-                    onChange={(e) => {
-                      setMake(e.target.value);
-                    }}
-                  />
+              <div className='sm:col-span-2'>
+                <label
+                  htmlFor='servicedate'
+                  className='block text-sm font-medium leading-6 text-gray-900'
+                >
+                  Make
+                </label>
+                <div className='mt-2'>
+                  <div className='flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 sm:max-w-md'>
+                    <input
+                      type='text'
+                      name='make'
+                      id='make'
+                      autoComplete='make'
+                      className='p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6'
+                      value={make}
+                      onChange={(e) => {
+                        setMake(e.target.value);
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className='sm:col-span-2'>
-              <label
-                htmlFor='servicedate'
-                className='block text-sm font-medium leading-6 text-gray-900'
-              >
-                Model
-              </label>
-              <div className='mt-2'>
-                <div className='flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 sm:max-w-md'>
-                  <input
-                    type='text'
-                    name='model'
-                    id='model'
-                    autoComplete='model'
-                    className='p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6'
-                    value={model}
-                    onChange={(e) => {
-                      setModel(e.target.value);
-                    }}
-                  />
+              <div className='sm:col-span-2'>
+                <label
+                  htmlFor='servicedate'
+                  className='block text-sm font-medium leading-6 text-gray-900'
+                >
+                  Model
+                </label>
+                <div className='mt-2'>
+                  <div className='flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 sm:max-w-md'>
+                    <input
+                      type='text'
+                      name='model'
+                      id='model'
+                      autoComplete='model'
+                      className='p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6'
+                      value={model}
+                      onChange={(e) => {
+                        setModel(e.target.value);
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className='sm:col-span-2'>
-              <label
-                htmlFor='servicedate'
-                className='block text-sm font-medium leading-6 text-gray-900'
-              >
-                Year
-              </label>
-              <div className='mt-2'>
-                <div className='flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 sm:max-w-md'>
-                  <input
-                    type='number'
-                    name='year'
-                    id='year'
-                    autoComplete='year'
-                    className='p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6'
-                    value={year}
-                    onChange={(e) => {
-                      setYear(e.target.value);
-                    }}
-                  />
+              <div className='sm:col-span-2'>
+                <label
+                  htmlFor='servicedate'
+                  className='block text-sm font-medium leading-6 text-gray-900'
+                >
+                  Year
+                </label>
+                <div className='mt-2'>
+                  <div className='flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 sm:max-w-md'>
+                    <input
+                      type='number'
+                      name='year'
+                      id='year'
+                      autoComplete='year'
+                      className='p-4 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6'
+                      value={year}
+                      onChange={(e) => {
+                        setYear(e.target.value);
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className='my-6 flex items-center justify-center gap-x-6'>
-        <button
-          onClick={() => {
-            router.push('http://localhost:3000/vehicles/');
-          }}
-          type='button'
-          className='text-sm font-semibold leading-6 text-gray-900'
-        >
-          Cancel
-        </button>
-        <button
-          type='submit'
-          className='rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
-        >
-          Save
-        </button>
-      </div>
-    </form>
+        <div className='my-6 flex items-center justify-center gap-x-6'>
+          <button
+            onClick={() => {
+              router.push('http://localhost:3000/vehicles/');
+            }}
+            type='button'
+            className='text-sm font-semibold leading-6 text-gray-900'
+          >
+            Cancel
+          </button>
+          <button
+            type='submit'
+            className='rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
+          >
+            Save
+          </button>
+        </div>
+      </form>
+    </>
   );
 };
 

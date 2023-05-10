@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import VehSvcCard from '@/components/VehCard';
 import { display } from '@mui/system';
 import { getSession, useSession } from 'next-auth/react';
+import Head from 'next/head';
 
 const handleEvent = (
   e,
@@ -64,52 +65,57 @@ const vehicles = ({ vehicles, role }) => {
   // console.log(filteredVehicles, filterBy, query, 'filtered veh');
 
   return (
-    <div className='bg-gray-100 min-h-screen'>
-      <div className='flex justify-between p-4'>
-        <h2 className='font-bold text-lg'>Vehicle Records</h2>
-        <Link href='/vehicles/add_vehicle'>
-          <button className='flex items-center bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded'>
-            <RiAddFill />
-            <h2>Add Vehicle</h2>
-          </button>
-        </Link>
-      </div>
+    <>
+      <Head>
+        <title>Vehicles</title>
+      </Head>
+      <div className='bg-gray-100 min-h-screen'>
+        <div className='flex justify-between p-4'>
+          <h2 className='font-bold text-lg'>Vehicle Records</h2>
+          <Link href='/vehicles/add_vehicle'>
+            <button className='flex items-center bg-emerald-500 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded'>
+              <RiAddFill />
+              <h2>Add Vehicle</h2>
+            </button>
+          </Link>
+        </div>
 
-      <div className='p-4'>
-        <div className='flex flex-wrap justify-start w-full m-auto p-4 border rounded-lg bg-white overflow-y-auto'>
-          <div className=' w-full m-auto p-4 flex flex-col items-start gap-5 md:gap-0'>
-            <input
-              onChange={(e) => {
-                setQuery(e.target.value);
-              }}
-              type='text'
-              placeholder='Search...'
-            />
-            <select
-              name='filterBy'
-              id='filterBy'
-              placeholder='Search By'
-              className='mt-4 p-4 block w-56 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6'
-              onChange={(e) => {
-                setFilterBy(e.target.value);
-              }}
-            >
-              {searchFilterKeys.map((key) => {
-                return <option key={key}>{key}</option>;
-              })}
-            </select>
+        <div className='p-4'>
+          <div className='flex flex-wrap justify-start w-full m-auto p-4 border rounded-lg bg-white overflow-y-auto'>
+            <div className=' w-full m-auto p-4 flex flex-col items-start gap-5 md:gap-0'>
+              <input
+                onChange={(e) => {
+                  setQuery(e.target.value);
+                }}
+                type='text'
+                placeholder='Search...'
+              />
+              <select
+                name='filterBy'
+                id='filterBy'
+                placeholder='Search By'
+                className='mt-4 p-4 block w-56 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6'
+                onChange={(e) => {
+                  setFilterBy(e.target.value);
+                }}
+              >
+                {searchFilterKeys.map((key) => {
+                  return <option key={key}>{key}</option>;
+                })}
+              </select>
+            </div>
+
+            {displayedVehicles.map((vehicle) => {
+              return (
+                <div key={vehicle.id}>
+                  <VehSvcCard role={role} data={vehicle} />
+                </div>
+              );
+            })}
           </div>
-
-          {displayedVehicles.map((vehicle) => {
-            return (
-              <div key={vehicle.id}>
-                <VehSvcCard role={role} data={vehicle} />
-              </div>
-            );
-          })}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
