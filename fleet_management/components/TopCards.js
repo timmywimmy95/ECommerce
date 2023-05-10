@@ -39,7 +39,7 @@ const TopCards = ({ figures }) => {
         title='Upcoming Svc'
         figure={figures[0].upcoming}
         percentage={Math.round((figures[0].upcoming / figures[0].total) * 100)}
-        color='yellow'
+        color='amber'
       />
     </div>
   );

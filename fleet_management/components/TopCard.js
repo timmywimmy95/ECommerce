@@ -1,6 +1,7 @@
 import React from 'react';
 
 const TopCard = ({ title, figure, percentage, addLine, color }) => {
+  console.log(color);
   return (
     <div className='bg-white flex w-full justify-evenly border p-4 rounded-lg '>
       <div className='flex-col m-auto w-full justify-center items-center'>

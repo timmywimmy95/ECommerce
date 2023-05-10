@@ -19,7 +19,16 @@ ChartJS.register(
   Legend
 );
 
-const BarChart = () => {
+const BarChart = ({ vehicles }) => {
+  const vehicle_plates = [];
+  const vehicle_cost = [];
+  vehicles.map((vehicle) => {
+    return (
+      vehicle_plates.push(vehicle.license_plate),
+      vehicle_cost.push(vehicle.total_servicing_cost)
+    );
+  });
+
   const [chartData, setChartData] = useState({
     datasets: [],
   });
@@ -28,11 +37,11 @@ const BarChart = () => {
 
   useEffect(() => {
     setChartData({
-      labels: ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'],
+      labels: vehicle_plates,
       datasets: [
         {
-          label: 'Sales $',
-          data: [18127, 22201, 19490, 17938, 24182, 17842, 22475],
+          label: 'Cost $',
+          data: vehicle_cost,
           borderColor: 'rgb(53, 162, 235)',
           backgroundColor: 'rgb(53, 162, 235, 0.4',
         },
@@ -45,7 +54,7 @@ const BarChart = () => {
         },
         title: {
           display: true,
-          text: 'Daily Revenue',
+          text: 'Cost Per Vehicle',
         },
       },
       maintainAspectRatio: false,

@@ -31,7 +31,7 @@ export default function Home({ vehicles, figures }) {
         }
         <TopCards figures={figures} />
         <div className='p-4 grid md:grid-cols-3 grid-cols-1 gap-4'>
-          <BarChart />
+          <BarChart vehicles={vehicles} />
           <RecentOrders updatedVehicles={vehicles} />
         </div>
       </main>

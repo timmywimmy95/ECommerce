@@ -41,6 +41,13 @@ export default async function handler(req, res) {
         );
       `);
 
+      await pool.query(`UPDATE vehicles v
+      SET total_servicing_cost = (
+          SELECT SUM(cost) 
+          FROM servicing s 
+          WHERE s.veh_id = v.id
+      );`);
+
       const data =
         await pool.query(`SELECT * FROM vehicles ORDER BY next_service_date ASC;
       `);
