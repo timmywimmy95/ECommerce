@@ -29,9 +29,11 @@ const LandingPageNav = () => {
           </Link>
         </div> */}
         <div>
-          <button className='py-2 px-5 bg-brightRed rounded-full hover:bg-indigo-400'>
-            Login
-          </button>
+          <Link href='/login'>
+            <button className='py-2 px-5 bg-brightRed rounded-full hover:bg-indigo-400'>
+              Login
+            </button>
+          </Link>
         </div>
       </div>
     </div>

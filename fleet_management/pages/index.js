@@ -12,6 +12,8 @@ import BarChart from '@/components/BarChart';
 import RecentOrders from '@/components/UpcomingServicings';
 import LandingPageNav from '@/components/LandingPageNav';
 import HeroSection from '@/components/HeroSection';
+import Features from '@/components/Features';
+import Testimonials from '@/components/Testimonials';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -26,6 +28,8 @@ export default function Home() {
       <main className='bg-gray-100 min-h-screen overflow-hidden'>
         <LandingPageNav />
         <HeroSection />
+        <Features />
+        <Testimonials />
       </main>
     </>
   );
