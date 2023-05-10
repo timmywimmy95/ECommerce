@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { DataGrid } from '@mui/x-data-grid';
 import { AiFillCar } from 'react-icons/ai';
 import { FaMotorcycle } from 'react-icons/fa';
 import { RiAddFill } from 'react-icons/ri';
