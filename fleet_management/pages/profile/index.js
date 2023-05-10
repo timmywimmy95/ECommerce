@@ -31,6 +31,11 @@ const profile = ({ user, session }) => {
     }
   }
 
+  const handleSignOut = async () => {
+    await signOut({ redirect: false }); // sign the user out and don't redirect
+    router.push('/login'); // redirect to the desired page
+  };
+
   async function handleSubmit(e) {
     e.preventDefault();
 
@@ -48,9 +53,11 @@ const profile = ({ user, session }) => {
     await fetch(`http://localhost:3000/api/users/${profile.id}/`, options)
       .then((res) => res.json())
       .then((data) => {
-        if (!data.error) {
-          router.push('/profile');
-        }
+        // if (!data.error) {
+        //   router.push('/profile');
+        // }
+        signOut({ redirect: '/login' });
+        // router.push('/login');
       });
   }
 
@@ -61,7 +68,10 @@ const profile = ({ user, session }) => {
           <h2 className='text-base font-semibold leading-7 text-gray-900'>
             Profile Page
           </h2>
-          <p className='mt-1 text-sm leading-6 text-gray-600'>asdasd </p>
+          <p className='mt-1 text-sm leading-6 text-gray-600'>
+            You will be required to login again after saving your updated
+            details.
+          </p>
 
           <div className='mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6'>
             <div className='sm:col-span-4'>
@@ -92,7 +102,6 @@ const profile = ({ user, session }) => {
           <h2 className='text-base font-semibold leading-7 text-gray-900'>
             Personal Information
           </h2>
-          <p className='mt-1 text-sm leading-6 text-gray-600'>asdasd </p>
 
           <div className='mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6'>
             <div className='sm:col-span-3'>
@@ -179,7 +188,7 @@ const profile = ({ user, session }) => {
           </div>
         </div>
 
-        <div className='py-4 border-b border-gray-900/10 pb-12'>
+        {/* <div className='py-4 border-b border-gray-900/10 pb-12'>
           <h2 className='text-base font-semibold leading-7 text-gray-900'>
             Notifications
           </h2>
@@ -218,7 +227,7 @@ const profile = ({ user, session }) => {
               </div>
             </fieldset>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div className='my-6 flex items-center justify-center gap-x-6'>
