@@ -14,7 +14,7 @@ const LandingPageNav = () => {
             ></Image>
           </Link>
         </div>
-        <div className='sm:hidden md:flex space-x-6'>
+        {/* <div className='sm:hidden md:flex space-x-6'>
           <Link className='hover:text-darkGrayishBlue' href='#'>
             Pricing
           </Link>
@@ -27,9 +27,9 @@ const LandingPageNav = () => {
           <Link className='hover:text-darkGrayishBlue' href='#'>
             Contact Us
           </Link>
-        </div>
+        </div> */}
         <div>
-          <button className='py-2 px-5  text-slate bg-brightRed rounded-full hover:bg-brightRedLight'>
+          <button className='py-2 px-5 bg-brightRed rounded-full hover:bg-indigo-400'>
             Login
           </button>
         </div>
