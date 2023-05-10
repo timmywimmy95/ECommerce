@@ -7,11 +7,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import DeleteModal from './deleteModal';
 
-const Dropdown = ({ info, handleDelete, handleEdit }) => {
+const Dropdown = ({ info, handleDelete, handleEdit, role }) => {
+  console.log(role);
   const router = useRouter();
-  // const handleEdit = () => {
-  //   router.push(`http://localhost:3000/servicing/${info.id}/update_servicing`);
-  // };
+
   const [open, setOpen] = useState(false);
   return (
     <>
@@ -36,15 +35,20 @@ const Dropdown = ({ info, handleDelete, handleEdit }) => {
         >
           <Popover.Panel className='absolute justify-end'>
             <div className='flex flex-row-reverse items-center'>
-              <button
-                onClick={() => {
-                  setOpen(!open);
-                }}
-              >
-                <span>
-                  <AiOutlineDelete className='text-indigo-600 ' size={20} />
-                </span>
-              </button>
+              {role === 'user' ? (
+                <></>
+              ) : (
+                <button
+                  onClick={() => {
+                    setOpen(!open);
+                  }}
+                >
+                  <span>
+                    <AiOutlineDelete className='text-indigo-600 ' size={20} />
+                  </span>
+                </button>
+              )}
+
               <button onClick={handleEdit}>
                 <span>
                   <GrFormEdit className='text-indigo-600' size={22} />

@@ -6,8 +6,8 @@ import SvcCard from '@/components/SvcCard';
 import Link from 'next/link';
 import { getSession, useSession, signOut } from 'next-auth/react';
 
-const servicing = ({ servicing, session }) => {
-  // console.log(servicing);
+const servicing = ({ servicing, role }) => {
+  console.log(role, 'svc');
   const keys = Object.keys(servicing[0]);
   const keyLabels = {
     servicedate: 'Service Date',
@@ -153,7 +153,7 @@ const servicing = ({ servicing, session }) => {
             {displayedServicing.map((service) => {
               return (
                 <div key={service.id}>
-                  <SvcCard className='w-6' data={service} />
+                  <SvcCard className='w-6' role={role} data={service} />
                 </div>
               );
             })}

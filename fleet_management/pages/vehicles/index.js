@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import VehSvcCard from '@/components/VehCard';
 import { display } from '@mui/system';
-import { getSession } from 'next-auth/react';
+import { getSession, useSession } from 'next-auth/react';
 
 const handleEvent = (
   e,
@@ -20,8 +20,8 @@ const handleEvent = (
   router.push('/');
 };
 
-const vehicles = ({ vehicles, session }) => {
-  // console.log(vehicles);
+const vehicles = ({ vehicles, role }) => {
+  console.log(role, 'veh');
   const keys = Object.keys(vehicles[0]);
   const searchFilterKeys = keys.filter(
     (key) => key !== 'id' && key !== 'created_at'
@@ -103,7 +103,7 @@ const vehicles = ({ vehicles, session }) => {
           {displayedVehicles.map((vehicle) => {
             return (
               <div key={vehicle.id}>
-                <VehSvcCard data={vehicle} />
+                <VehSvcCard role={role} data={vehicle} />
               </div>
             );
           })}

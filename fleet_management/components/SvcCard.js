@@ -10,7 +10,7 @@ import Link from 'next/link';
 import Dropdown from './Dropdown';
 import { useRouter } from 'next/router';
 
-const SvcCard = ({ data }) => {
+const SvcCard = ({ data, role }) => {
   let router = useRouter();
   let date = new Date(data.servicedate);
   let month = date.toLocaleString('default', { month: 'short' });
@@ -49,6 +49,7 @@ const SvcCard = ({ data }) => {
           <GiFullMotorcycleHelmet size={25} />
         )}
         <Dropdown
+          role={role}
           info={data}
           handleDelete={handleDelete}
           handleEdit={(e) => handleEdit(e)}

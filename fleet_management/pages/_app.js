@@ -13,7 +13,7 @@ export default function App({
       {session ? (
         <>
           <Sidebar>
-            <Component {...pageProps} />
+            <Component role={session.user.role} {...pageProps} />
           </Sidebar>
         </>
       ) : (

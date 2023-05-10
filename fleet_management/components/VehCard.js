@@ -47,8 +47,7 @@ import Link from 'next/link';
 import Dropdown from './Dropdown';
 import { useRouter } from 'next/router';
 
-const VehCard = ({ data }) => {
-  // console.log(data);
+const VehCard = ({ data, role }) => {
   let router = useRouter();
   let coe_date = new Date(data.coe);
   let coe_month = coe_date.toLocaleString('default', { month: 'short' });
@@ -89,6 +88,7 @@ const VehCard = ({ data }) => {
           <GiFullMotorcycleHelmet size={25} />
         )}
         <Dropdown
+          role={role}
           info={data}
           handleDelete={(e) => handleDelete(e)}
           handleEdit={(e) => handleEdit(e)}
