@@ -10,6 +10,8 @@ import Header from '@/components/Header';
 import TopCards from '@/components/TopCards';
 import BarChart from '@/components/BarChart';
 import RecentOrders from '@/components/UpcomingServicings';
+import LandingPageNav from '@/components/LandingPageNav';
+import HeroSection from '@/components/HeroSection';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -21,7 +23,10 @@ export default function Home() {
       <Head>
         <title>Landing Page</title>
       </Head>
-      <main className='bg-gray-100 min-h-screen overflow-hidden'>hi</main>
+      <main className='bg-gray-100 min-h-screen overflow-hidden'>
+        <LandingPageNav />
+        <HeroSection />
+      </main>
     </>
   );
 }
