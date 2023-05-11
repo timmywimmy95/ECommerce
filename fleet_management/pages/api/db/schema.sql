@@ -29,15 +29,13 @@ CREATE TABLE servicing (
   veh_id INTEGER REFERENCES vehicles(id) ON DELETE CASCADE
 );
 
--- INSERT INTO users (name, email, password, role) VALUES ('Timothy', 'timothykwok95@gmail.com', 'Deuteronomy_95!', 'business');
--- INSERT INTO users (username, email, password, role) VALUES ('Gale', 'bevunderscoreng@gmail.com', 'Taylorswift13!', 'user');
 
-INSERT INTO vehicles (make, model, year, insurance, road_tax, license_plate, type ) VALUES ('Honda', 'Africa Twin', '2019', DATE '2029-10-04', DATE '2023-10-07', 'FBU435U', 'motorcycle' );
-INSERT INTO vehicles (make, model, year, insurance, road_tax, license_plate, type) VALUES ('Mazda', '3', '2019', DATE '2029-06-04', DATE '2023-12-08', 'SMH489Z', 'car' );
+-- INSERT INTO vehicles (make, model, year, insurance, road_tax, license_plate, type ) VALUES ('Honda', 'Africa Twin', '2019', DATE '2029-10-04', DATE '2023-10-07', 'FBU435U', 'motorcycle' );
+-- INSERT INTO vehicles (make, model, year, insurance, road_tax, license_plate, type) VALUES ('Mazda', '3', '2019', DATE '2029-06-04', DATE '2023-12-08', 'SMH489Z', 'car' );
 
-INSERT INTO servicing (servicedate, description, cost, veh_id, mileage) VALUES (DATE '2023-04-27', 'Accident repair from 20 Feb 2023', 0, 1, 25000);
-INSERT INTO servicing (servicedate, description, cost, veh_id, mileage) VALUES (DATE '2022-10-30', 'Oil and oil filter change', 130, 1, 24300);
-INSERT INTO servicing (servicedate, description, cost, veh_id, mileage) VALUES (DATE '2023-03-15', 'Fork servicing and brake pads', 350, 1, 22000);
+-- INSERT INTO servicing (servicedate, description, cost, veh_id, mileage) VALUES (DATE '2023-04-27', 'Accident repair from 20 Feb 2023', 0, 1, 25000);
+-- INSERT INTO servicing (servicedate, description, cost, veh_id, mileage) VALUES (DATE '2022-10-30', 'Oil and oil filter change', 130, 1, 24300);
+-- INSERT INTO servicing (servicedate, description, cost, veh_id, mileage) VALUES (DATE '2023-03-15', 'Fork servicing and brake pads', 350, 1, 22000);
 
 -- CREATE TABLE accounts
 --   (

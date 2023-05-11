@@ -120,13 +120,13 @@ const VehCard = ({ data, role }) => {
         className='mt-6 leading-normal text-sm'
         href={`/vehicles/${data.id}`}
       >
-        <div className='flex font-semibold w-full group text-slate-400'>
+        {/* <div className='flex font-semibold w-full group text-slate-400'>
           Read more
           <BsArrowRightShort
             className='self-center group-hover:translate-x-1 ease-in-out duration-300'
             size={22}
           />
-        </div>
+        </div> */}
       </Link>
     </div>
   );

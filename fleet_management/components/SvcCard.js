@@ -56,23 +56,29 @@ const SvcCard = ({ data, role }) => {
         />
       </div>
       <div className='bg-grey-100 font-bold text-lg'>{data.license_plate}</div>
+
       <div className='mt-3 font-semibold text-sm'>{data.description}</div>
-      <div className='text-sm font-light w-60 md:w-auto'></div>
-      <div className='mt-auto text-sm font-light w-60 md:w-auto'>
+      <div className='text-sm mt-2 font-light w-60 md:w-auto'>
+        Cost: ${data.cost}
+      </div>
+      <div className='text-sm mt-8 font-light w-60 md:w-auto'>
+        Serviced at: {data.mileage} km
+      </div>
+      <div className='mt-auto text-sm font-semibold w-60 md:w-auto'>
         {day} {month} {year}
       </div>
-      <Link
+      {/* <Link
         className='mt-6 leading-normal text-sm'
         href={`/servicing/${data.id}`}
-      >
-        <div className='flex font-semibold w-full group text-slate-400'>
+      > */}
+      {/* <div className='flex font-semibold w-full group text-slate-400'>
           Read more
           <BsArrowRightShort
             className='self-center group-hover:translate-x-1 ease-in-out duration-300'
             size={22}
           />
-        </div>
-      </Link>
+        </div> */}
+      {/* </Link> */}
     </div>
   );
 };

@@ -15,9 +15,9 @@ const HeroSection = () => {
             planning, maintenance scheduling, and maximized fleet availability.
           </p>
           <div className='flex justify-center md:justify-start'>
-            <div className='py-3 px-6 rounded-md bg-brightRed rounded-full hover:bg-indigo-400'>
+            {/* <div className='py-3 px-6 rounded-md bg-brightRed rounded-full hover:bg-indigo-400'>
               Read more
-            </div>
+            </div> */}
 
             {/* <BsArrowRightShort
               className='self-center group-hover:translate-x-1 ease-in-out duration-300'
