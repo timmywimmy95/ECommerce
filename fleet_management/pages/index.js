@@ -14,6 +14,7 @@ import LandingPageNav from '@/components/LandingPageNav';
 import HeroSection from '@/components/HeroSection';
 import Features from '@/components/Features';
 import Testimonials from '@/components/Testimonials';
+import Footer from '@/components/Footer';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -30,6 +31,7 @@ export default function Home() {
         <HeroSection />
         <Features />
         <Testimonials />
+        <Footer />
       </main>
     </>
   );

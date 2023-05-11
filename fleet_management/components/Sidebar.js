@@ -14,7 +14,7 @@ const Sidebar = ({ children }) => {
 
   const handleSignOut = async () => {
     await signOut({ redirect: false }); // sign the user out and don't redirect
-    router.push('/login'); // redirect to the desired page
+    router.push('/'); // redirect to the desired page
   };
   return (
     <>
