@@ -8,7 +8,7 @@ import { useRouter } from 'next/router';
 import DeleteModal from './deleteModal';
 
 const Dropdown = ({ info, handleDelete, handleEdit, role }) => {
-  console.log(role);
+  // console.log(role);
   const router = useRouter();
 
   const [open, setOpen] = useState(false);

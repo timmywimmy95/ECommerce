@@ -16,14 +16,22 @@ export default async function handler(req, res) {
           SELECT 1
           FROM servicing s
           WHERE s.veh_id = v.id
+        )
+        OR NOT EXISTS (
+          SELECT 1
+          FROM servicing s
+          WHERE s.veh_id = v.id
         );
       `);
 
       // Execute the second query to update the next_service_date column in the vehicles table
       await pool.query(`
         UPDATE vehicles
-        SET next_service_date = last_service + INTERVAL '3 MONTH'
-        WHERE last_service IS NOT NULL;
+        SET next_service_date = CASE
+          WHEN last_service IS NOT NULL THEN last_service + INTERVAL '3 MONTH'
+          ELSE NULL
+          END
+        WHERE last_service IS NOT NULL OR next_service_date IS NOT NULL;
       `);
 
       await pool.query(`
@@ -31,10 +39,16 @@ export default async function handler(req, res) {
         SET status = 
           CASE
             WHEN v.next_service_date <= CURRENT_DATE THEN 'Overdue'
-          WHEN v.next_service_date <= (now() + INTERVAL '30 Day') THEN 'Upcoming'
+            WHEN v.next_service_date <= (now() + INTERVAL '30 Day') THEN 'Upcoming'
+            WHEN v.next_service_date IS NULL THEN NULL
             ELSE 'Up to Date'
           END
         WHERE EXISTS (
+          SELECT 1
+          FROM servicing s
+          WHERE s.veh_id = v.id
+        )
+        OR NOT EXISTS (
           SELECT 1
           FROM servicing s
           WHERE s.veh_id = v.id

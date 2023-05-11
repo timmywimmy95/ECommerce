@@ -22,7 +22,7 @@ const handleEvent = (
 };
 
 const vehicles = ({ vehicles, role }) => {
-  console.log(role, 'veh');
+  // console.log(role, 'veh');
   const keys = Object.keys(vehicles[0]);
   const searchFilterKeys = keys.filter(
     (key) => key !== 'id' && key !== 'created_at'

@@ -25,7 +25,7 @@ const SvcCard = ({ data, role }) => {
       headers: { 'content-type': 'application/json' },
     };
     await fetch(
-      `http://localhost:3000/api/vehicles/${data.veh_id}/servicing/${data.id}`,
+      `http://localhost:3000/api/vehicles/${data.veh_id}/servicing/${data.id}?role=${role}`,
       options
     )
       .then((res) => res.json())

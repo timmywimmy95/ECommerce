@@ -48,6 +48,7 @@ import Dropdown from './Dropdown';
 import { useRouter } from 'next/router';
 
 const VehCard = ({ data, role }) => {
+  // console.log(role);
   let router = useRouter();
   let coe_date = new Date(data.coe);
   let coe_month = coe_date.toLocaleString('default', { month: 'short' });
@@ -67,7 +68,10 @@ const VehCard = ({ data, role }) => {
       method: 'DELETE',
       headers: { 'content-type': 'application/json' },
     };
-    await fetch(`http://localhost:3000/api/vehicles/${data.id}/`, options)
+    await fetch(
+      `http://localhost:3000/api/vehicles/${data.id}?role=${role}`,
+      options
+    )
       .then((res) => res.json())
       .then((data) => {
         if (!data.error) {
@@ -75,6 +79,7 @@ const VehCard = ({ data, role }) => {
         }
       });
   };
+
   const handleEdit = () => {
     router.push(`http://localhost:3000/vehicles/${data.id}/update_vehicle`);
   };

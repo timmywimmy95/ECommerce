@@ -1,7 +1,10 @@
 import pool from '../../db/index';
+import { getSession } from 'next-auth/react';
 
 //api/people
 export default async function handler(req, res) {
+  const { role } = req.query;
+  console.log(role, 'from veh api');
   let method = req.method;
   let { veh_id } = req.query;
 
@@ -16,15 +19,19 @@ export default async function handler(req, res) {
     }
   }
   if (req.method === 'DELETE') {
-    try {
-      const data = await pool.query('DELETE FROM vehicles WHERE id = $1', [
-        veh_id,
-      ]);
-      res.status(200).json({
-        message: `Successfully deleted vehicle ${veh_id}`,
-      });
-    } catch (err) {
-      res.status(500).json({ error: 'failed to delete data' });
+    if (role && role === 'admin') {
+      try {
+        const data = await pool.query('DELETE FROM vehicles WHERE id = $1', [
+          veh_id,
+        ]);
+        res.status(200).json({
+          message: `Successfully deleted vehicle ${veh_id}`,
+        });
+      } catch (err) {
+        res.status(500).json({ error: 'failed to delete data' });
+      }
+    } else {
+      res.status(403).json({ error: 'Unauthorized' });
     }
   }
   if (req.method === 'PUT') {
