@@ -240,7 +240,7 @@ const profile = ({ user, session }) => {
             type='button'
             className='text-sm font-semibold leading-6 text-gray-900'
             onClick={() => {
-              router.push('http://localhost:3000/');
+              router.push('http://localhost:3000/dashboard');
             }}
           >
             Cancel
