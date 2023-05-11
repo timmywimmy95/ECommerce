@@ -2,6 +2,8 @@
 
 Manage is a Fleet Management System designed to help fleet managers efficiently manage their vehicle fleet. It provides features for tracking vehicles, scheduling maintenance tasks, providing an overview of the entire fleet, and more.
 
+
+
 ## Technologies Used
 
 - **Next.js**: Next.js is a React framework that allows for server-side rendering, routing, and building static websites. It provides a fast and efficient development experience for building modern web applications.
