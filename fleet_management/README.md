@@ -2,7 +2,7 @@
 
 Manage is a Fleet Management System designed to help fleet managers efficiently manage their vehicle fleet. It provides features for tracking vehicles, scheduling maintenance tasks, providing an overview of the entire fleet, and more.
 
-
+![Image of Dashboard](https://github.com/timmywimmy95/ECommerce/blob/main/fleet_management/public/readme/Screenshot%202023-05-11%20at%205.50.33%20PM.png?raw=true)
 
 ## Technologies Used
 
