@@ -86,20 +86,20 @@ export default function Home() {
 //   );
 // }
 
-// export async function getServerSideProps({ req }) {
-//   //This function protects the current file from being viewed.
+export async function getServerSideProps({ req }) {
+  //This function protects the current file from being viewed.
 
-//   const session = await getSession({ req });
+  const session = await getSession({ req });
 
-//   if (!session) {
-//     return {
-//       redirect: {
-//         destination: '/login',
-//         permanent: false,
-//       },
-//     };
-//   }
-//   return {
-//     props: { session },
-//   };
-// }
+  if (session) {
+    return {
+      redirect: {
+        destination: '/dashboard',
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: { session },
+  };
+}
